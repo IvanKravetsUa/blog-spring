@@ -1,0 +1,19 @@
+.card-comments img{
+    width: 4rem;
+}
+
+#postLikeDislike{
+    size: 5;
+}
+
+#userInformation img{
+    width: 20rem;
+}
+
+body {
+    background-color: #e7f7fa
+}
+
+.card {
+    background-color: #d6f3f7
+}

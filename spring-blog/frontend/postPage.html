@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>My Dream Blog</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Панель -->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light cyan lighten-3 scrolling-navbar">
+            <div class="container">
+                <a href="#" class="navbar-brand waves-effect">
+                    <strong style="color:rgb(10, 0, 155)">MDB</strong>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent"
+                    aria-controls="navContent" aria-expanded="false">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div id="navContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a href="index.html" class="nav-link waves-effect"><strong>Home</strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="accountPage.html" class="nav-link waves-effect"><strong>Account</strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="postPage.html" class="nav-link waves-effect"><strong>Posts</strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link waves-effect" data-toggle="modal"
+                                data-target="#aboutModal"><strong>About us</strong></a>
+                        </li>
+                    </ul>
+
+                    <form class="form-inline my-2 my-lg-0">
+                        <input type="text" class="form-control mr-sm-2" placeholder="Search" aria-label="Search">
+                        <button
+                            class="btn btn-outline-primary waves-effect my-2 my-sm-0"><strong>Search</strong></button>
+                    </form>
+
+                    <ul class="navbar-nav nav-flex-icons">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link waves-effect border border-dark rounded" data-toggle="modal"
+                                data-target="#loginModal"><strong>Log in</strong></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Пост -->
+    <main class="mt-5 pt-5">
+        <div class="container">
+            <section class="mt-4">
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        <div class="card mb-4 wow fadeInLeft">
+                            <img src="images/postImg.jpeg" alt="" class="img-fluid">
+                        </div>
+
+                        <div class="card mb-4 wow slideInLeft z-depth-2">
+                            <div class="card-body">
+                                <!-- титулка -->
+                                <p class="h5 my4">Lorem ipsum dolor sit.</p>
+                                <!-- цитата -->
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic,
+                                        voluptas.</p>
+                                    <footer class="blockquote-footer">
+                                        Lorem, ipsum dolor. <cite title="Source title">Source title</cite>
+                                    </footer>
+                                </blockquote>
+                                <!-- Тіло поста -->
+                                <!-- <p class="h5 my-4">Lorem ipsum dolor sit.</p> -->
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum suscipit
+                                    quaerat distinctio? Eligendi odit nesciunt alias rerum facere, iste dolores aperiam
+                                    quos non? Reiciendis laboriosam autem fugiat cumque quae.</p>
+
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum suscipit
+                                    quaerat distinctio? Eligendi odit nesciunt alias rerum facere, iste dolores aperiam
+                                    quos non? Reiciendis laboriosam autem fugiat cumque quae.</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="media-likes row">
+                                    <!-- лайки -->
+                                    <div class="media-likes red-text col">
+                                        <h5>Likes</h5>
+                                        <p><strong>8</strong>
+                                            <i class="fas fa-heart"></i><button type="button"
+                                                class="btn btn-outline-danger waves-effec p-2"><i
+                                                    class="far fa-thumbs-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-outline-danger waves-effec p-2"><i
+                                                    class="far fa-thumbs-down" aria-hidden="true"></i></button>
+                                        </p>
+
+                                    </div>
+                                    <!-- теги -->
+                                    <div class="media-tags col">
+                                        <a href="#" class="light-blue-text">
+                                            <h6>
+                                                <p><strong>Tags:</strong></p>
+                                                <i class="fas fa-tags"></i>
+                                                <strong>Lorem ipsum dolor sit amet.</strong>
+                                            </h6>
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- час створення поста -->
+                                <div class="media-time d-flex justify-content-center">
+                                    <p>
+                                        <p>Time create:</p>
+                                        <strong>
+                                            <i class="fa fa-clock-o"></i>
+                                            20/08/2018
+                                        </strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Силка на автора поста -->
+                        <div class="card mb-4 wow fadeInLeft">
+                            <div class="card-header front-weight-bold">
+                                <span>About author</span>
+                                <span class="pull-right">
+                                    <a href="#">
+                                        <i class="fab fa-facebook-f fa-fw blue-text mr-2"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fab fa-instagram fa-fw pink-text mr-2"></i>
+                                    </a>
+                                </span>
+                            </div>
+                            <!-- Інфа про автора -->
+                            <div class="card-body">
+                                <div class="media d-block d-md-flex mt-3">
+                                    <img style="width:100px" src="images/autorPost.jpg" alt=""
+                                        class="d-flex mb-3 mx-auto z-depth-1">
+                                    <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                        <h5 class="mt-0 font-weight-bold">Lorem, ipsum.</h5>
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia minus magnam
+                                        totam tenetur ad dicta, et inventore quis asperiores consequatur numquam iste
+                                        mollitia possimus explicabo ducimus eos architecto nihil reiciendis autem,
+                                        fugit earum eius ipsum.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Коменти які вже написані -->
+                        <div class="card card-comments mb3 wow fadeInRight">
+                            <div class="card-header font-weight-bold">3 comments</div>
+                            <div class="card-body">
+
+                                <div class="media d-block d-md-flex mt-4">
+                                    <img src="images/portred.jpg" alt="" class="d-flex mb-3 mx-auto">
+                                    <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                        <h5 class="mt-0 front-weight-bold">Lorem, ipsum.
+                                            <a href="#" class="pull-right">
+                                                <i class="fa fa-reply"></i>
+                                            </a>
+                                        </h5>
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, nam. Aliquam
+                                        at possimus esse tempora doloremque voluptate aut quidem deserunt maxime,
+                                        laboriosam, voluptates quod laudantium eligendi ipsum eius quae harum. Ad
+                                        perspiciatis tempore consequuntur nobis!
+
+                                        <div class="media d-block d-md-flex mt-4">
+                                            <img src="images/portred.jpg" alt="" class="d-flex mb-3 mx-auto">
+                                            <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                                <h5 class="mt-0 front-weight-bold">Lorem, ipsum.
+                                                    <a href="#" class="pull-right">
+                                                        <i class="fa fa-reply"></i>
+                                                    </a>
+                                                </h5>
+                                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, nam.
+                                                Aliquam
+                                                at possimus esse tempora doloremque voluptate aut quidem deserunt
+                                                maxime,
+                                                laboriosam, voluptates quod laudantium eligendi ipsum eius quae harum.
+                                                Ad
+                                                perspiciatis tempore consequuntur nobis!
+                                            </div>
+                                        </div>
+
+                                        <!-- Написання комента -->
+                                        <div class="form-group mt-4">
+                                            <label for="reply">Your comment</label>
+                                            <textarea name="" id="" class="form-control" rows="5"></textarea>
+                                            <div class="text-center">
+                                                <button class="btn btn-info btn-sm">Post</button>
+                                            </div>
+                                        </div>
+                                        <!-- Комент юзера -->
+                                        <div class="media d-block d-md-flex mt-3">
+                                            <img src="images/portred2.jpg" alt="" class="d-flex mb-3 mx-auto">
+                                            <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                                <h5 class="mt-0 front-weight-bold">Lorem, ipsum.
+                                                    <a href="#" class="pull-right">
+                                                        <i class="fa fa-reply"></i>
+                                                    </a>
+                                                </h5>
+                                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, nam.
+                                                Aliquam
+                                                at possimus esse tempora doloremque voluptate aut quidem deserunt
+                                                maxime,
+                                                laboriosam, voluptates quod laudantium eligendi ipsum eius quae harum.
+                                                Ad
+                                                perspiciatis tempore consequuntur nobis!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="media d-block d-md-flex mt-3">
+                                    <img src="images/portred2.jpg" alt="" class="d-flex mb-3 mx-auto">
+                                    <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                        <h5 class="mt-0 front-weight-bold">Lorem, ipsum.
+                                            <a href="#" class="pull-right">
+                                                <i class="fa fa-reply"></i>
+                                            </a>
+                                        </h5>
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, nam.
+                                        Aliquam
+                                        at possimus esse tempora doloremque voluptate aut quidem deserunt
+                                        maxime,
+                                        laboriosam, voluptates quod laudantium eligendi ipsum eius quae harum.
+                                        Ad
+                                        perspiciatis tempore consequuntur nobis!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card mb-3 wow fadeInUp">
+                            <div class="card-header front-weight-bold">Leave a reply</div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label>Your comment</label>
+                                        <textarea class="form-control" id="" rows="5"></textarea>
+                                    </div>
+
+                                    <label>Your name</label>
+                                    <input type="text" class="form-control">
+
+                                    <br>
+
+                                    <label>Your Email</label>
+                                    <input type="email" class="form-control">
+
+                                    <div class="text-center mt-4">
+                                        <button class="btn btn-info btn-md">Post</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card peach-gradient mb-4 wow fadeIn">
+                            <div class="card-body text-white text-center">
+                                <h4 class="mb-4">
+                                    My Dream Blog
+                                </h4>
+                                <p>
+                                    <strong>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias iste ut delectus
+                                        hic labore sapiente.
+                                    </strong>
+                                </p>
+                                <p class="mb-4">
+                                    <strong>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias iste ut delectus
+                                        hic labore sapiente Lorem ipsum dolor sit..
+                                    </strong>
+                                </p>
+
+                                <a href="#" class="btn btn-outline-white btn-md">
+                                    Start <i class="fa fa-graduation-cap ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- пост дня -->
+                        <div class="card mb-4 text-center wow fadeIn">
+                            <div class="card-header">Post of the day</div>
+                            <div class="card-body">
+                                <div class="author">
+                                    <!-- <img style="width: 4rem;" src="images/img3.jpeg" alt="" class="d-flex mr-3"> -->
+                                    <a>
+                                        <p><strong>Author</strong></p>
+                                        <h4 class="mt-0 mb-1 font-weight-bold">
+                                            Ivan Kravets
+                                        </h4>
+                                    </a>
+                                    <hr>
+                                    <!-- титулка поста -->
+                                    <div class="media-header">
+                                        <a>
+                                            <h4 class="mt-0 mb-1 font-weight-bold">
+                                                About Life
+                                            </h4>
+                                        </a>
+                                        <br>
+                                        <!-- тіло поста -->
+                                        <div class="media-body">
+                                            <a class="mt-0 mb-1 font-weight">
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum dolor
+                                                sit amet, consectetur adipisicing elit. Saepe quis eveniet totam
+                                                corporis distinctio eius autem quasi. Eius, saepe doloremque!
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="card-footer">
+                                        <!-- лайки і теги -->
+                                        <div class="media-likes row">
+                                            <!-- лайки -->
+                                            <div class="media-likes red-text col">
+                                                <h6><strong>Likes</strong>
+                                                    <p><i class="fas fa-heart"></i> 8</p>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        <!-- теги -->
+                                        <div class="media-tags col">
+                                            <a href="#" class="light-blue-text">
+                                                <h6>
+                                                    <p><strong>Tags:</strong></p>
+                                                    <i class="fas fa-tags"></i>
+                                                    <strong>Lorem ipsum dolor sit amet.</strong>
+                                                </h6>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <!-- Коментар дня -->
+                            <div class="card mb-4 wow fadeIn">
+                                <div class="card-header">Сomment of the day</div>
+                                <div class="card-body">
+                                    <!-- Автор комента імя -->
+                                    <div class="media-header">
+                                        <img style="width: 4rem;" src="images/img3.jpeg" alt="" class="d-flex mr-3">
+                                        <a>
+                                            <h4 class="mt-0 mb-1 font-weight-bold">
+                                                Lorem, ipsum.
+                                            </h4>
+                                        </a>
+                                        <!-- тіло комента -->
+                                        <div class="media-body">
+                                            <a>
+                                                <h5 class="mt-0 mb-1 font-weight-bold">Lorem ipsum dolor sit.</h5>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum dolor
+                                                sit amet consectetur adipisicing elit. Debitis consectetur dolore
+                                                asperiores numquam quia rem ducimus perspiciatis dolorem facilis natus?
+                                            </a>
+                                        </div>
+                                        <hr>
+                                        <!-- лайки -->
+                                        <div class="card-footer">
+                                            <div class="media-likes row">
+                                                <!-- лайки -->
+                                                <div class="media-likes red-text col">
+                                                    <h6><strong>Likes</strong>
+                                                        <p><i class="fas fa-heart"></i> 8</p>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+        </div>
+    </main>
+    <!-- Логін -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Log in</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form id="submitLogin" class="text-center">
+                            <!-- Email -->
+                            <input type="email" id="userEmailLogin" class="form-control mb-4" placeholder="E-mail"
+                                required>
+                            <!-- Password -->
+                            <input type="password" id="userPassLogin" class="form-control mb-4" placeholder="Password"
+                                required>
+                            <div class="d-flex justify-content-around">
+                                <div>
+                                    <!-- Remember me -->
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input">
+                                            Запамятати мене
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <!-- Forgot password -->
+                                    <a href="">Forgot password?</a>
+                                </div>
+                            </div>
+                            <!-- Sign in button -->
+                            <button id="btnSubmitLogin" class="btn btn-info btn-block my-4" type="submit">Sign
+                                in</button>
+                            <!-- Register -->
+                            <p>Not a member?
+                                <a href="">Register</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- about us -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">About us</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo placeat amet optio earum! Saepe
+                        tempora praesentium quos, ab voluptate at delectus quam placeat ipsum accusamus.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer class="page-footer text-center font-small mdb-color cyan darken-4 mt-4 wow fadeIn">
+        <div class="pt-4">
+            <a href="#" class="btn btn-outline-white">IvanKravets <i class="fa fa-graduation-cap"></i></a>
+        </div>
+        <hr class="my-2">
+        <div class="footer-copyright py-3">
+            My Dream Blog Copyrights © 2018
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
