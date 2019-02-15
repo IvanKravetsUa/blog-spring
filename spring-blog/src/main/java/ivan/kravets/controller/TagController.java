@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -18,7 +19,7 @@ public class TagController {
     private TagService tagService;
 
     @PostMapping
-    public ResponseEntity<?> createTag(@RequestBody TagDTO tag) {
+    public ResponseEntity<?> createTag(@Valid @RequestBody TagDTO tag) {
         TagDTO tagDTO = tagService.saveTag(tag);
         return new ResponseEntity<>(tagDTO, HttpStatus.CREATED);
     }

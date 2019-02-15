@@ -4,6 +4,7 @@ import ivan.kravets.domain.UserDTO;
 import ivan.kravets.entity.UserEntity;
 import ivan.kravets.exceptions.AlreadyExistsException;
 import ivan.kravets.exceptions.NotFoundException;
+import ivan.kravets.exceptions.ServerException;
 import ivan.kravets.repository.UserRepository;
 import ivan.kravets.service.UserService;
 import ivan.kravets.utils.ObjectMapperUtils;
@@ -25,11 +26,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO saveUser(UserDTO user) {
 
-        UserEntity userEntity = objectMapper.map(user, UserEntity.class);  //dtoToEntityMapper(user);
-
-        userRepository.save(userEntity);
-        user.setId(userEntity.getId());
-        return user;
+        if (user.getPassword().equals(user.getPasswordConfirm())) {
+            UserEntity userEntity = objectMapper.map(user, UserEntity.class);  //dtoToEntityMapper(user);
+            userRepository.save(userEntity);
+            user.setId(userEntity.getId());
+            return user;
+        } else {
+            throw new ServerException("passwords not match");
+        }
     }
 
     @Override

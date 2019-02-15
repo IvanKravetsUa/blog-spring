@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class CommentController {
 
     // Запис Комента від певного користувача до певного блогу
     @PostMapping("{userId:[0-9]}/post/{postId:[0-9]{1,5}}")
-    public ResponseEntity<?> createComment(@PathVariable("userId") Long idUser, @PathVariable("postId") Long idPost, @RequestBody CommentDTO comment) {
+    public ResponseEntity<?> createComment(@Valid @PathVariable("userId") Long idUser, @PathVariable("postId") Long idPost, @RequestBody CommentDTO comment) {
         CommentDTO commentDTO = commentService.saveComment(idUser, idPost, comment);
 
         return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);

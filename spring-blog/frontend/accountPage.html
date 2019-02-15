@@ -110,7 +110,8 @@
           <div class="card mb-4 wow slideInLeft z-depth-2">
             <div class="card-header">
               <h5><strong>Detailed information</strong></h5>
-              <a href="registrationPage.html">Change</a>
+              <a href="#" class="nav-link waves-effect border border-dark rounded" data-toggle="modal"
+              data-target="#detailedInformationModal">Change</a>
             </div>
             <div class="card-body">
               <p><i class="fas fa-birthday-cake"></i>Date of birth <h5>20/08/2018</h5>
@@ -134,6 +135,82 @@
       </div>
     </div>
   </main>
+
+  <!-- більше деталей -->
+  <div class="modal fade" id="detailedInformationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Detailed information</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <form id="sendRegistration" class="text-center border border-light p-2 m-2 z-depth-5">
+              <div class="form-froup">
+                <!-- <input id="dateOfBirthRegistration" type="text" class="form-control" aria-describedby="dateOfBirthHelp"
+                  placeholder="dateOfBirth" required> -->
+                  <!-- <div class="input-group date" id="datetimepicker1">
+                    <input type="text" class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                  </div>
+                <small id="dateOfBirthHelp" class="form-text text-muted">
+                  Введіть дату народження
+                </small> -->
+                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                <label class="control-label" for="datepicker">Select Date</label>
+                <input type="text" class="form-control" id="datepicker">
+              </div>
+              </div>
+              <br>
+              <div class="form-froup">
+                <input id="userLastNameRegistration" type="text" class="form-control" aria-describedby="lastNameHelp"
+                  placeholder="LastName" required>
+                <small id="lastNameHelp" class="form-text text-muted">
+                  Введіть прізвище
+                </small>
+              </div>
+              <br>
+              <div class="form-froup">
+                <input id="userEmailRegistration" type="email" class="form-control" aria-describedby="emailHelp"
+                  placeholder="Email" required>
+                <small id="emailHelp" class="form-text text-muted">
+                  Введіть емейл
+                </small>
+              </div>
+              <br>
+              <div class="form-froup">
+                <input id="userPassRegistration" type="password" class="form-control" placeholder="Password" required>
+                <small id="userPassHelp" class="form-text text-muted">
+                  Мінімальний пароль 10 символів</small>
+              </div>
+              <br>
+              <div class="form-froup">
+                <input id="userPassConfirmRegistration" type="password" class="form-control" placeholder="Password Confirm"
+                  required>
+                <small id="userPassConfirmHelp" class="form-text text-muted">
+                  Повинен відповідати паролю</small>
+              </div>
+              <br>
+              <div class="form-froup">
+                <select id="userSexRegistration" class="browser-default custom-select">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                <small id="sexHelp" class="form-text text-muted">
+                  Стать</small>
+              </div>
+              <button id="btnSendRegistration" type="submit" class="btn btn-primary">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <!-- Логін -->
@@ -223,6 +300,7 @@
   <script>
     new WOW().init();
   </script>
+  <script src="js/global.js"></script>
   <script src="js/main.js"></script>
 </body>
 

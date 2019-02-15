@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class PostController {
 
     // Створення поста від певного користувача
     @PostMapping("/user/{userId:[0-9]{1,5}}")
-    public ResponseEntity<?> createPost(@PathVariable("userId") Long id, @RequestBody PostDTO post) {
+    public ResponseEntity<?> createPost(@Valid @PathVariable("userId") Long id, @RequestBody PostDTO post) {
         PostDTO postDTO = postService.savePost(id, post);
         return new ResponseEntity<>(postDTO, HttpStatus.CREATED);
     }
