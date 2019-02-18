@@ -11,6 +11,7 @@ import ivan.kravets.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +29,14 @@ public class UserServiceImpl implements UserService {
 
         if (user.getPassword().equals(user.getPasswordConfirm())) {
             UserEntity userEntity = objectMapper.map(user, UserEntity.class);  //dtoToEntityMapper(user);
-            userRepository.save(userEntity);
-            user.setId(userEntity.getId());
-            return user;
+            if (!userRepository.existsByEmail(userEntity.getEmail())){
+                userRepository.save(userEntity);
+                user.setId(userEntity.getId());
+                return user;
+            } else  {
+                throw new ServerException("User with email" + user.getEmail()+ " exist");
+            }
+
         } else {
             throw new ServerException("passwords not match");
         }

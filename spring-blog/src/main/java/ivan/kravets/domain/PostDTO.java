@@ -37,5 +37,6 @@ public class PostDTO {
     private Set<TagDTO> tags;
 
     private Set<CommentDTO> comments;
+
     private Set<MarkDTO> marks;
 }

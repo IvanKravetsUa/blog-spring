@@ -17,3 +17,7 @@ body {
 .card {
     background-color: #d6f3f7
 }
+
+.postsBody {
+    padding-top: 10px;
+}

@@ -1,11 +1,17 @@
-$(document).ready(function(){
+$(document).ready(function () {
+    let SERVER_URL = "http://localhost:8080/";
 
     showAllUsers();
     showAllPosts();
 
+    let userId = 1;
+    showUserById(userId);
+
     $("#sendRegistration").submit(signup);
 
     $("#submitLogin").submit(login);
+
+
 
 });
 
@@ -18,46 +24,199 @@ function signup() {
     let userPasswordConfirm = $("#userPassConfirmRegistration").val();
     let userSexType = $("#userSexRegistration").val();
 
-    let user = {
-        firstName: userFirstName,
-        lastName: userLastName,
-        email: userEmail,
-        password: userPassword,
-        passwordConfirm: userPasswordConfirm,
-        sex: userSexType,
-        reputation: 0
-    };
+    if (userPassword == userPasswordConfirm) {
+        let user = {
+            firstName: userFirstName,
+            lastName: userLastName,
+            email: userEmail,
+            password: userPassword,
+            passwordConfirm: userPasswordConfirm,
+            sex: userSexType,
+            reputation: 0
+        };
 
+        $.ajax({
+            url: SERVER_URL + "users",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(user),
+            complete: function (serverResponse) {
+                console.log(serverResponse);
+            }
+        });
+    } else {
+        alert("Passwords don't match")
+    }
+}
+
+function showUserById(userId) {
     $.ajax({
-        url: "http://localhost:8080/users",
-        method: "POST",
+        url: SERVER_URL + "users/" + userId,
+        method: "GET",
         contentType: "application/json",
-        data: JSON.stringify(user),
-        complete: function(serverResponse) {
-            console.log(serverResponse);
+        complete: function (serverResponse) {
+            let userById = serverResponse.responseJSON;
+            $("#accountInformationBody").append(
+                `
+             <p><i class="far fa-user-circle"></i>Avatar</p>
+              <img src="images/autorPost.jpg" alt="" class="img-fluid">
+              <hr>
+              <p>UserId</p>
+              <h5>${userById.id}</h5>
+              <hr>
+              <div class="row">
+        
+              <div class="col">
+                  <p>First Name</p>
+                  <h5>${userById.lastName}</h5>
+                </div>
+
+                <div class="col">
+                  <p>Last Name</p>
+                  <h5>${userById.lastName}</h5>
+                </div>
+              </div>
+              <hr>
+
+              <p><i class="fas fa-envelope"></i>E-mail: <h5>${userById.email}</h5>
+              </p>
+              <hr>
+              <p><i class="fas fa-transgender"></i>Sex: <h5>${userById.sex}</h5>
+              </p>
+              <hr>
+              <p><i class="fab fa-angellist"></i>Reputation: </p>
+              <h5>${userById.reputation}</h5>
+                `
+            );
+            $("#accountInformationFooter").append(
+                `<p><i class="fas fa-clock"></i>Date of creation:<h5></h5>${userById.accountCreatedDate}</p>`
+            );
         }
     });
-
 }
 
 function showAllUsers() {
     $.ajax({
-        url: "http://localhost:8080/users",
+        url: SERVER_URL + "users",
         method: "GET",
-        contentType:"application/json",
-        complete: function(serverResponse) {
-            console.log(serverResponse);      
+        contentType: "application/json",
+        complete: function (serverResponse) {
+            console.log(serverResponse.responseJSON);
+            let users = serverResponse.responseJSON;
+
+            $.each(users, function (key, value) {
+
+            });
         }
     });
 }
 
 function showAllPosts() {
     $.ajax({
-        url: "http://localhost:8080/users",
+        url: SERVER_URL + "posts",
         method: "GET",
-        contentType:"application/json",
-        complete: function(serverResponse) {
-            console.log(serverResponse);      
+        contentType: "application/json",
+        complete: function (serverResponse) {
+            console.log(serverResponse.responseJSON);
+            let posts = serverResponse.responseJSON;
+            $.each(posts, function (key, value) {
+                $("#postView").append(
+                    `
+          <div class="postsBody col-lg-6 col-md-12">
+            <div class="view overlay rounded z-depth-1-half mb-3">
+              <img src="images/img1.jpeg" alt="" class="img-fluid">
+              <a href="postPage.html">
+                <div class="mask rgba-white-slight"></div>
+              </a>
+            </div>
+           
+            <div class="news-data">
+              <a href="#" class="light-blue-text">
+                <h6>
+                  <i class="fas fa-tags"></i>
+                  <strong></strong>
+                </h6>
+              </a>
+              
+              <p>
+                <strong>
+                  <i class="fas fa-clock"></i>
+                  ${value.createdDate}
+                </strong>
+              </p>
+            </div>
+
+            <div class="media-likes red-text col">
+                <h5><i class="fas fa-heart"></i>Likes</h5>
+                 <p><strong>${value.marks}</strong></p>
+               </div>
+          
+            <h3>
+              <a href="postPage.html">
+                <strong>${value.title}</strong>
+              </a>
+             
+            </h3>
+            <p>${value.description}</p>
+            <hr>
+            <div class="row">
+              <div class="col-md-3">
+
+                <div class="view overlay rounded z-depth-1">
+                  <img src="images/img2.jpeg" alt="" class="img-fluid">
+                </div>
+              </div>
+              <div class="col-md-9">
+                <p class="dark-gray-text">
+                  <strong>
+                    <i class="fas fa-clock"></i>
+                    19/08/2018
+                  </strong>
+                </p>
+                <a href="postPage.html">
+                  Lorem ipsum dolor sit amet consectetur.
+                  <i class="fa fa-angle-right float-right"></i>
+                </a>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+              <div class="col-md-3">
+
+                <div class="view overlay rounded z-depth-1">
+                  <img src="images/img2.jpeg" alt="" class="img-fluid">
+                </div>
+              </div>
+              <div class="col-md-9">
+                <p class="dark-gray-text">
+                  <strong>
+                    <i class="fas fa-clock"></i>
+                    19/08/2018
+                  </strong>
+                </p>
+                <a>
+                  Lorem ipsum dolor sit amet consectetur.
+                  <i class="fa fa-angle-right float-right"></i>
+                </a>
+               </div>
+              </div>
+             </div>
+                    `
+                );
+            });
+        }
+    });
+}
+
+function showPostById(postId) {
+    $.ajax({
+        url: SERVER_URL + "users/" + userId,
+        method: "GET",
+        contentType: "application/json",
+        complete: function (serverResponse) {
+            let userById = serverResponse.responseJSON;
         }
     });
 }
@@ -71,7 +230,7 @@ function login() {
         email: userEmailLogin,
         password: userPasswordLogin
     };
-    
+
     // $.ajax({
     //     url: "http://localhost:8080/users",
     //     method: "POST",
@@ -109,5 +268,5 @@ function login() {
 //  $.each(myArr, function(i, val){
 //      $("#users").append("<li>"+val+"</li>");  
 // })   функція добавляє елементи масиву в ліст на сторінку
-    
+
 
