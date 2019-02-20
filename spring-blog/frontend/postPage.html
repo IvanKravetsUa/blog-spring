@@ -70,74 +70,31 @@
         <div class="container">
             <section class="mt-4">
                 <div class="row">
-                    <div class="col-md-8 mb-4">
+                    <div id="postDetail" class="col-md-8 mb-4">
                         <div class="card mb-4 wow fadeInLeft">
                             <img src="images/postImg.jpeg" alt="" class="img-fluid">
                         </div>
 
                         <div class="card mb-4 wow slideInLeft z-depth-2">
-                            <div class="card-body">
-                                <!-- титулка -->
-                                <p class="h5 my4">Lorem ipsum dolor sit.</p>
-                                <!-- цитата -->
-                                <blockquote class="blockquote">
-                                    <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic,
-                                        voluptas.</p>
-                                    <footer class="blockquote-footer">
-                                        Lorem, ipsum dolor. <cite title="Source title">Source title</cite>
-                                    </footer>
-                                </blockquote>
-                                <!-- Тіло поста -->
-                                <!-- <p class="h5 my-4">Lorem ipsum dolor sit.</p> -->
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum suscipit
-                                    quaerat distinctio? Eligendi odit nesciunt alias rerum facere, iste dolores aperiam
-                                    quos non? Reiciendis laboriosam autem fugiat cumque quae.</p>
+                             <div id="postCardBody" class="card-body"></div>
 
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore illum suscipit
-                                    quaerat distinctio? Eligendi odit nesciunt alias rerum facere, iste dolores aperiam
-                                    quos non? Reiciendis laboriosam autem fugiat cumque quae.</p>
-                            </div>
-                            <div class="card-footer">
+                            <div id="postCardFooter" class="card-footer">
                                 <div class="media-likes row">
-                                    <!-- лайки -->
-                                    <div class="media-likes red-text col">
+                                  
+                                    <div id="postCardFooterLike" class="media-likes red-text col">
                                         <h5>Likes</h5>
-                                        <p><strong>8</strong>
-                                            <i class="fas fa-heart"></i><button type="button"
-                                                class="btn btn-outline-danger waves-effec p-2"><i
-                                                    class="far fa-thumbs-up" aria-hidden="true"></i></button>
-                                            <button type="button" class="btn btn-outline-danger waves-effec p-2"><i
-                                                    class="far fa-thumbs-down" aria-hidden="true"></i></button>
-                                        </p>
-
                                     </div>
-                                    <!-- теги -->
-                                    <div class="media-tags col">
-                                        <a href="#" class="light-blue-text">
-                                            <h6>
-                                                <p><strong>Tags:</strong></p>
-                                                <i class="fas fa-tags"></i>
-                                                <strong>Lorem ipsum dolor sit amet.</strong>
-                                            </h6>
-                                        </a>
-                                    </div>
+                                   
+                                    <div id="postCardFooterTags" class="media-tags col"> </div>
                                 </div>
                                 <hr>
-                                <!-- час створення поста -->
-                                <div class="media-time d-flex justify-content-center">
-                                    <p>
-                                        <p>Time create:</p>
-                                        <strong>
-                                            <i class="fa fa-clock-o"></i>
-                                            20/08/2018
-                                        </strong>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                              
+                                <div id="postCardFooterTime" class="media-time d-flex justify-content-center"></div>
+                            </div> 
+                        </div> 
 
                         <!-- Силка на автора поста -->
-                        <div class="card mb-4 wow fadeInLeft">
+                        <div  class="card mb-4 wow fadeInLeft">
                             <div class="card-header front-weight-bold">
                                 <span>About author</span>
                                 <span class="pull-right">
@@ -150,8 +107,8 @@
                                 </span>
                             </div>
                             <!-- Інфа про автора -->
-                            <div class="card-body">
-                                <div class="media d-block d-md-flex mt-3">
+                            <div id="postAuthorPost" class="card-body">
+                                <!-- <div class="media d-block d-md-flex mt-3">
                                     <img style="width:100px" src="images/autorPost.jpg" alt=""
                                         class="d-flex mb-3 mx-auto z-depth-1">
                                     <div class="media-body text-center text-md-left ml-md-3 ml-0">
@@ -161,7 +118,7 @@
                                         mollitia possimus explicabo ducimus eos architecto nihil reiciendis autem,
                                         fugit earum eius ipsum.
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -182,33 +139,7 @@
                                         at possimus esse tempora doloremque voluptate aut quidem deserunt maxime,
                                         laboriosam, voluptates quod laudantium eligendi ipsum eius quae harum. Ad
                                         perspiciatis tempore consequuntur nobis!
-
-                                        <div class="media d-block d-md-flex mt-4">
-                                            <img src="images/portred.jpg" alt="" class="d-flex mb-3 mx-auto">
-                                            <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                                                <h5 class="mt-0 front-weight-bold">Lorem, ipsum.
-                                                    <a href="#" class="pull-right">
-                                                        <i class="fa fa-reply"></i>
-                                                    </a>
-                                                </h5>
-                                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, nam.
-                                                Aliquam
-                                                at possimus esse tempora doloremque voluptate aut quidem deserunt
-                                                maxime,
-                                                laboriosam, voluptates quod laudantium eligendi ipsum eius quae harum.
-                                                Ad
-                                                perspiciatis tempore consequuntur nobis!
-                                            </div>
-                                        </div>
-
-                                        <!-- Написання комента -->
-                                        <div class="form-group mt-4">
-                                            <label for="reply">Your comment</label>
-                                            <textarea name="" id="" class="form-control" rows="5"></textarea>
-                                            <div class="text-center">
-                                                <button class="btn btn-info btn-sm">Post</button>
-                                            </div>
-                                        </div>
+                                    
                                         <!-- Комент юзера -->
                                         <div class="media d-block d-md-flex mt-3">
                                             <img src="images/portred2.jpg" alt="" class="d-flex mb-3 mx-auto">
@@ -229,28 +160,10 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="media d-block d-md-flex mt-3">
-                                    <img src="images/portred2.jpg" alt="" class="d-flex mb-3 mx-auto">
-                                    <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                                        <h5 class="mt-0 front-weight-bold">Lorem, ipsum.
-                                            <a href="#" class="pull-right">
-                                                <i class="fa fa-reply"></i>
-                                            </a>
-                                        </h5>
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, nam.
-                                        Aliquam
-                                        at possimus esse tempora doloremque voluptate aut quidem deserunt
-                                        maxime,
-                                        laboriosam, voluptates quod laudantium eligendi ipsum eius quae harum.
-                                        Ad
-                                        perspiciatis tempore consequuntur nobis!
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
-
+                        <!-- написання комента -->
                         <div class="card mb-3 wow fadeInUp">
                             <div class="card-header front-weight-bold">Leave a reply</div>
                             <div class="card-body">
@@ -259,14 +172,6 @@
                                         <label>Your comment</label>
                                         <textarea class="form-control" id="" rows="5"></textarea>
                                     </div>
-
-                                    <label>Your name</label>
-                                    <input type="text" class="form-control">
-
-                                    <br>
-
-                                    <label>Your Email</label>
-                                    <input type="email" class="form-control">
 
                                     <div class="text-center mt-4">
                                         <button class="btn btn-info btn-md">Post</button>
@@ -492,7 +397,6 @@
     <script>
         new WOW().init();
     </script>
-    <script src="js/global.js"></script>
     <script src="js/main.js"></script>
 </body>
 
