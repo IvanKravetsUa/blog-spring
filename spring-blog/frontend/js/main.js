@@ -13,7 +13,16 @@ $(document).ready(function () {
 
   $("#submitLogin").submit(login);
 
+  $(document).on("click", "#postCardFooterLike button", function (e) {
+    console.log(e.target.id);
+    let btnId = e.target.id;
+    let postId = btnId.split("-")
+    console.log("postId" + postId);
+  })
 
+  $(document).on("click", "#postView ", function (e) {
+    console.log(e.target.id);
+  });
 
 });
 
@@ -43,7 +52,7 @@ function signup() {
       contentType: "application/json",
       data: JSON.stringify(user),
       complete: function (serverResponse) {
-        console.log(serverResponse);
+        console.log(serverResponse.responseJSON);
       }
     });
   } else {
@@ -121,20 +130,32 @@ function showAllPosts() {
     complete: function (serverResponse) {
       console.log(serverResponse.responseJSON);
       let posts = serverResponse.responseJSON;
-      $.each(posts, function (key, value) {
+      let tagsInPost = posts.tags
+
+      $.each(posts, function (key, post) {
+        let marksTotal = 0;
+        post.marks.forEach(function () {
+          marksTotal++
+        });
+
+        let tagsNames = [];
+        $.each(post.tags, function (key, tag){
+          tagsNames.push(tag.name)
+        });
+
         $("#postView").append(
           `
-          <div class="postsBody col-lg-6 col-md-12">
+          <div id = "postViewId-${post.id}" class="postsBody col-lg-6 col-md-12">
             <div class="view overlay rounded z-depth-1-half mb-3">
               <img src="images/img1.jpeg" alt="" class="img-fluid">
-              <a href="postPage.html">
+              <a href="#">
                 <div class="mask rgba-white-slight"></div>
               </a>
             </div>
            
             <div class="news-data">
               <a href="#" class="light-blue-text">
-                <h6>
+                <h6 id = "postId">${tagsNames}
                   <i class="fas fa-tags"></i>
                   <strong></strong>
                 </h6>
@@ -143,23 +164,22 @@ function showAllPosts() {
               <p>
                 <strong>
                   <i class="fas fa-clock"></i>
-                  ${value.createdDate}
+                  ${post.createdDate}
                 </strong>
               </p>
             </div>
 
             <div class="media-likes red-text col">
-                <h5><i class="fas fa-heart"></i>Likes</h5>
-                 <p><strong>${value.marks}</strong></p>
+                <h5><i class="fas fa-heart"></i>Likes <strong>${marksTotal}</strong></h5>
                </div>
           
             <h3>
               <a href="postPage.html">
-                <strong>${value.title}</strong>
+                <strong>${post.title}</strong>
               </a>
              
             </h3>
-            <p>${value.description}</p></div>
+            <p>${post.description}</p></div>
                     `
         );
       });
@@ -177,6 +197,19 @@ function showPostById(postId) {
 
       let tagsInPost = postById.tags
       let userByPost = postById.user
+      let commentsByPost = postById.comments
+      let marksByPost = postById.marks
+
+      let commentsSize = 0;
+      commentsByPost.forEach(function () {
+        commentsSize++
+      });
+
+      let postMarksSize = 0;
+      marksByPost.forEach(function () {
+        postMarksSize++
+      });
+
 
       $("#postCardBody").append(
         `
@@ -197,24 +230,22 @@ function showPostById(postId) {
         `
       );
       $("#postCardFooterLike").append(
-        `
-          <p><strong>8</strong>
-          <i class="fas fa-heart"></i><button type="button"
-              class="btn btn-outline-danger waves-effec p-2"><i
+        `<h5><i class="fas fa-heart"></i><strong>Likes ${postMarksSize}</strong></h5>
+          <button id="postLike-${postById.id}" type="button" class="btn btn-outline-danger waves-effec p-2"><i
                   class="far fa-thumbs-up" aria-hidden="true"></i></button>
-          <button type="button" class="btn btn-outline-danger waves-effec p-2"><i
+          <button id="postDislike-${postById.id}" type="button" class="btn btn-outline-danger waves-effec p-2"><i
                   class="far fa-thumbs-down" aria-hidden="true"></i></button>
         </p>
         `
       );
-      $.each(tagsInPost, function (key, value) {
+      $.each(tagsInPost, function (key, tags) {
         $("#postCardFooterTags").append(
           `
           <a href="#" class="light-blue-text">
              <h6>
               <p><strong>Tags:</strong></p>
                <i class="fas fa-tags"></i>
-               <strong>${value.name}</strong>
+               <strong>${tags.name}</strong>
               </h6>
             </a> 
           `
@@ -241,6 +272,46 @@ function showPostById(postId) {
         </div>
         `
       );
+
+
+      $("#postCommentsSize").append(
+        `
+        ${commentsSize} comments
+        `
+      );
+
+      $.each(commentsByPost, function (key, comments) {
+        let marksValue = 0;
+        comments.marks.forEach(function () {
+          marksValue++
+        });
+        $("#postCommentsPost").append(
+          `
+        <div class="card-body">
+
+        <div class="media d-block d-md-flex mt-4">
+            <img src="images/portred.jpg" alt="" class="d-flex mb-3 mx-auto">
+            <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                <h5 class="mt-0 front-weight-bold">${comments.user.firstName} ${comments.user.lastName}
+                    <a href="#" class="pull-right">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                </h5>
+                ${comments.body}
+            </div>
+        </div>
+       </div> 
+        <div class="card-footer">
+       <div class="media-likes red-text col">
+          <h5><i class="fas fa-heart"></i><strong>Likes ${marksValue}</strong></h5>
+         </div>
+      </div> 
+      
+        `
+        );
+      });
+
+
     }
   });
 }
