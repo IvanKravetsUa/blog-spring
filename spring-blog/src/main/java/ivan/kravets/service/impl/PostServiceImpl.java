@@ -12,6 +12,8 @@ import ivan.kravets.repository.UserRepository;
 import ivan.kravets.service.PostService;
 import ivan.kravets.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -114,7 +116,22 @@ public class PostServiceImpl implements PostService {
         return postDTOS;
     }
 
-//    public PostDTO entityToDTOMapper(PostEntity postEntity) {
+    @Override
+    public Page<PostEntity> getUsersByPage(Pageable pageable) {
+        Page<PostEntity> postFromDB = postRepository.findAll(pageable); // page = 0 size = 10
+
+        return postFromDB;
+    }
+
+    @Override
+    public void deletePost(Long id) {
+        if (!postRepository.existsById(id)){
+            throw new NotFoundException("Post with id[" + id + "] not found");
+        }
+        postRepository.deleteById(id);
+    }
+
+    //    public PostDTO entityToDTOMapper(PostEntity postEntity) {
 //        PostDTO postDTO = new PostDTO();
 //        postDTO.setId(postEntity.getId());
 //        postDTO.setTitle(postEntity.getTitle());

@@ -21,7 +21,7 @@ import java.util.Set;
 @Table(name = "tag")
 public class TagEntity extends BaseEntity {
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
 }

@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   let userId = 1;
-  let postId = 1;
+  let postId = 5;
 
   showAllUsers();
   showAllPosts();
@@ -9,18 +9,39 @@ $(document).ready(function () {
   showPostById(postId);
   showUserById(userId);
 
+  // deletePost(postId);
+
   $("#sendRegistration").submit(signup);
 
   $("#submitLogin").submit(login);
+
+  $(document).on("click", "#postView button", function (e) {
+    let btnId = e.target.id;
+    let postId = btnId.split("-")[1];
+    deletePost(postId);
+  });
+
+  let pageNumber = 0;
+  $("#btnPrev").on("click", function () {
+    if (pageNumber > 0) {
+      pageNumber--;
+    }
+    showAllPosts(pageNumber);
+  });
+
+  $("#btnNext").on("click", function () {
+    pageNumber++;
+    showAllPosts(pageNumber);
+  });
 
   $(document).on("click", "#postCardFooterLike button", function (e) {
     console.log(e.target.id);
     let btnId = e.target.id;
     let postId = btnId.split("-")
     console.log("postId" + postId);
-  })
+  });
 
-  $(document).on("click", "#postView ", function (e) {
+  $(document).on("click", "#postView", function (e) {
     console.log(e.target.id);
   });
 
@@ -52,7 +73,10 @@ function signup() {
       contentType: "application/json",
       data: JSON.stringify(user),
       complete: function (serverResponse) {
-        console.log(serverResponse.responseJSON);
+        console.log(serverResponse);
+        if (serverResponse.status == 201) {
+          alert("User added to database");
+        }
       }
     });
   } else {
@@ -122,9 +146,29 @@ function showAllUsers() {
   });
 }
 
-function showAllPosts() {
+function deletePost(postId) {
+  let deletePost = confirm("Ви впевнені що хочете видалити пост")
+  if (deletePost) {
+    deletePostRequest(postId);
+  }
+}
+
+function deletePostRequest(postId) {
   $.ajax({
-    url: "http://localhost:8080/posts",
+    url: "http://localhost:8080/posts/" + postId,
+    method: "DELETE",
+    contentType: "application/json",
+    complete: function (serverResponse) {
+      if (serverResponse.status == 200) {
+        alert("post deleted");
+      }
+    }
+  });
+}
+
+function showAllPosts(pageNumber) {
+  $.ajax({
+    url: "http://localhost:8080/" + "posts/page?page=" + pageNumber,
     method: "GET",
     contentType: "application/json",
     complete: function (serverResponse) {
@@ -132,20 +176,26 @@ function showAllPosts() {
       let posts = serverResponse.responseJSON;
       let tagsInPost = posts.tags
 
-      $.each(posts, function (key, post) {
+      $("#postView").empty();
+
+      if (posts.totalPages <= pageNumber) {
+        $("#btnNext").prop("disabled", true);
+      }
+
+      $.each(posts.content, function (key, post) {
         let marksTotal = 0;
         post.marks.forEach(function () {
           marksTotal++
         });
 
         let tagsNames = [];
-        $.each(post.tags, function (key, tag){
+        $.each(post.tags, function (key, tag) {
           tagsNames.push(tag.name)
         });
 
         $("#postView").append(
           `
-          <div id = "postViewId-${post.id}" class="postsBody col-lg-6 col-md-12">
+          <div id = "postViewId-${post.id}" class="postsBody col-lg-6 col-md-12"></p>
             <div class="view overlay rounded z-depth-1-half mb-3">
               <img src="images/img1.jpeg" alt="" class="img-fluid">
               <a href="#">
@@ -153,33 +203,31 @@ function showAllPosts() {
               </a>
             </div>
            
-            <div class="news-data">
-              <a href="#" class="light-blue-text">
-                <h6 id = "postId">${tagsNames}
-                  <i class="fas fa-tags"></i>
-                  <strong></strong>
-                </h6>
-              </a>
-              
-              <p>
-                <strong>
-                  <i class="fas fa-clock"></i>
-                  ${post.createdDate}
-                </strong>
-              </p>
+            <div class = "row" class="news-data">
+              <a href="#" class="col-6 light-blue-text">
+                <h6 id = "postId"><i class="fas fa-tags"></i>Tags: ${tagsNames}</h6>
+              </a>     
+                
             </div>
-
-            <div class="media-likes red-text col">
-                <h5><i class="fas fa-heart"></i>Likes <strong>${marksTotal}</strong></h5>
+            <div class = "likeAndTimePost row">
+             <div class="media-likes red-text col">
+                <p><strong><i class="fas fa-heart"></i>Likes ${marksTotal}</strong></p>
                </div>
-          
-            <h3>
+            <p class = "col">
+                  <i class="fas fa-clock"></i> createdDate:
+                  ${post.createdDate}
+            </p>
+          </div>
+            <h4>
               <a href="postPage.html">
                 <strong>${post.title}</strong>
               </a>
              
-            </h3>
-            <p>${post.description}</p></div>
+            </h4>
+            <p>${post.description}</p><button class="btn btn-danger btn-sm" id="post-${post.id}">Delete</button>
+           
+          </div>
+            
                     `
         );
       });

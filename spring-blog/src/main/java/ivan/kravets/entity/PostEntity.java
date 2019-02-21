@@ -56,4 +56,7 @@ public class PostEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "mark_id")
     )
     private Set<MarkEntity> marks = new HashSet<>();
+
+    @Column(name = "is_deleted", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isDeleted;
 }

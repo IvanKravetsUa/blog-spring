@@ -3,6 +3,8 @@ package ivan.kravets.controller;
 import ivan.kravets.domain.PostDTO;
 import ivan.kravets.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +50,17 @@ public class PostController {
     public ResponseEntity<?> findPostsByUserId(@PathVariable("userId") Long idUser) {
         List<PostDTO> posts = postService.findPostsByUserId(idUser);
         return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("page")  // /posts/page?page=0&size=10
+    public ResponseEntity<?> getPostsByPage(@PageableDefault Pageable pageable) {
+
+        return new ResponseEntity<>(postService.getUsersByPage(pageable), HttpStatus.OK);
+    }
+
+    @DeleteMapping("{postId}")
+    public ResponseEntity<?> deletePostById(@PathVariable("postId") Long id) {
+        postService.deletePost(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
