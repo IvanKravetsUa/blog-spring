@@ -14,4 +14,6 @@ public interface UserService {
 
     UserDTO updateUser(Long id, UserDTO userToUpdate);
 
+    void addImageToUser(Long id, String fileName);
+
 }

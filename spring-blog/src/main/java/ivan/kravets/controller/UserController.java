@@ -54,13 +54,15 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("image")
+    @PostMapping("{userId}/image")
     public ResponseEntity<?> uploadImage(
+            @PathVariable("userId") Long id,
             @RequestParam("imageFile")MultipartFile file) {
 
         System.out.println(file.getOriginalFilename());
 
         fileStorageService.storeFile(file);
+        userService.addImageToUser(id, file.getOriginalFilename());
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

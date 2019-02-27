@@ -77,16 +77,30 @@ public class UserServiceImpl implements UserService {
 //            throw new NotFoundException("User with id [" +id+ "] not found");
 //        }
         UserEntity userEntity = objectMapper.map(userToUpdate, UserEntity.class);
-
         UserEntity userFromDB = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id [" +id+ "] not found"));
-
         userFromDB = userEntity;
 
         userRepository.save(userFromDB);
         return null;
     }
 
-//    private UserDTO entityToDTOMapper(UserEntity userEntity) {
+    @Override
+    public void addImageToUser(Long id, String fileName) {
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        userEntity.setImage(fileName);
+        userRepository.save(userEntity);
+    }
+
+
+
+
+
+
+
+
+
+    //    private UserDTO entityToDTOMapper(UserEntity userEntity) {
 //        UserDTO userDTO = new UserDTO();
 //        userDTO.setId(userEntity.getId());
 //        userDTO.setFirstName(userEntity.getFirstName());

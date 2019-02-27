@@ -34,10 +34,11 @@ public class UserEntity extends BaseEntity {
     private String sex;
 
     @Column(name = "reputation", nullable = false)
-    private Long reputation;
+    private Integer reputation;
 
     @Column(name = "account_created_date", nullable = false)
     private LocalDate accountCreatedDate = LocalDate.now();
 
+    private String image;
 
 }

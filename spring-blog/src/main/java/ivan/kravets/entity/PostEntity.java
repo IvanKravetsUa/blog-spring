@@ -59,4 +59,6 @@ public class PostEntity extends BaseEntity {
 
     @Column(name = "is_deleted", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isDeleted;
+
+    private String image;
 }

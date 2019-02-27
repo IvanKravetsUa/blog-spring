@@ -21,6 +21,15 @@ $(document).ready(function () {
     deletePost(postId);
   });
 
+  $(document).on("change", "#accountInformationBody input", function (e) {
+    // console.log(e.target.id)
+    let inputId = e.target.id;
+    let userId = inputId.split("-")[1];
+    // console.log(userId)
+
+    uploadUserAvatar(userId);
+  })
+
   let pageNumber = 0;
   $("#btnPrev").on("click", function () {
     if (pageNumber > 0) {
@@ -47,6 +56,26 @@ $(document).ready(function () {
 
 });
 
+function uploadUserAvatar(userId) {
+  let formData = new FormData();
+  formData.append("imageFile", $("#image-" + userId)[0].files[0]);
+
+  $.ajax({ // localhost:8080/users/10/image
+    url: "http://localhost:8080/users/" + userId + "/image",
+    method: "POST",
+    contentType: false,
+    processData: false,
+    data: formData,
+    complete: function (res) {
+      console.log(res);
+
+      if (res.status == 202) {
+        $("#accountInformationBody").empty();
+        showUserById(userId)
+      }
+    }
+  })
+}
 
 function signup() {
   let userFirstName = $("#userFirstNameRegistration").val();
@@ -85,6 +114,8 @@ function signup() {
 }
 
 function showUserById(userId) {
+  let IMAGE_URL = "http://localhost:8080/users/image?imageName=";
+
   $.ajax({
     url: "http://localhost:8080/users/" + userId,
     method: "GET",
@@ -94,7 +125,17 @@ function showUserById(userId) {
       $("#accountInformationBody").append(
         `
              <p><i class="far fa-user-circle"></i>Avatar</p>
-              <img src="images/autorPost.jpg" alt="" class="img-fluid">
+             <img src="${userById.image != null? (IMAGE_URL + userById.image) : ""}" class="img-fluid"">
+              <div class="input-group m-2">
+               <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Upload new avatar</span>
+               </div>
+               <div class="custom-file">
+                 <input type="file" class="custom-file-input" id="image-${userById.id}" aria-describedby="inputGroupFileAddon01">
+                 <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+               </div>
+             </div>
+             
               <hr>
               <p>UserId</p>
               <h5>${userById.id}</h5>

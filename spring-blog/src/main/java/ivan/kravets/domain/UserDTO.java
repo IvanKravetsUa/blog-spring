@@ -41,7 +41,9 @@ public class UserDTO {
     private String sex;
 
     @NotNull(message = "Field 'reputation' can't be null")
-    private Long reputation;
+    private Integer reputation;
 
     private LocalDate accountCreatedDate = LocalDate.now();
+
+    private String image;
 }

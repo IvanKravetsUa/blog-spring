@@ -39,4 +39,6 @@ public class PostDTO {
     private Set<CommentDTO> comments;
 
     private Set<MarkDTO> marks;
+
+    private String image;
 }
