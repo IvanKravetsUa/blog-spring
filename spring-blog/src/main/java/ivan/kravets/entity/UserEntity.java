@@ -4,10 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,5 +39,12 @@ public class UserEntity extends BaseEntity {
     private LocalDate accountCreatedDate = LocalDate.now();
 
     private String image;
+
+    @ManyToMany
+    @JoinTable(name = "user_role",
+       joinColumns = @JoinColumn(name = "user_id"),
+       inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<RoleEntity> roles;
 
 }

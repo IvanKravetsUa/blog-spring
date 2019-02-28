@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserDetailsRepository extends JpaRepository<UserDetailsEntity, Long> {
+public interface UserInformationRepository extends JpaRepository<UserDetailsEntity, Long> {
 
     boolean existsById(Long id);
 

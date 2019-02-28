@@ -1,13 +1,16 @@
 package ivan.kravets;
 
 import ivan.kravets.entity.PostEntity;
+import ivan.kravets.entity.RoleEntity;
 import ivan.kravets.entity.UserEntity;
 import ivan.kravets.repository.PostRepository;
+import ivan.kravets.repository.RoleRepository;
 import ivan.kravets.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
@@ -24,17 +27,38 @@ public class SpringBlogApplication implements CommandLineRunner {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
     public void run(String... args) throws Exception {
+
+        if (roleRepository.count() == 0) {
+            RoleEntity roleAdmin = new RoleEntity();
+            roleAdmin.setRole("ADMIN");
+
+            RoleEntity roleUser = new RoleEntity();
+            roleUser.setRole("USER");
+            roleRepository.saveAll(Arrays.asList(roleAdmin, roleUser));
+        }
+
         if (userRepository.count() == 0) {
+
+            RoleEntity roleAdmin = roleRepository.findByRoleIgnoreCase("ADMIN").get();
+            RoleEntity roleUser = roleRepository.findByRoleIgnoreCase("USER").get();
+
 
             UserEntity adminEntity = new UserEntity();
             adminEntity.setEmail("admin@gmail.com");
             adminEntity.setFirstName("ivan");
             adminEntity.setLastName("kravets");
-            adminEntity.setPassword("1234567");
+            adminEntity.setPassword(passwordEncoder.encode("123456"));
             adminEntity.setSex("MALE");
             adminEntity.setReputation(1);
+            adminEntity.setRoles(Arrays.asList(roleAdmin));
 
             userRepository.save(adminEntity);
 
@@ -43,9 +67,10 @@ public class SpringBlogApplication implements CommandLineRunner {
                 userEntity.setEmail("user" +i+"@gmail.com");
                 userEntity.setFirstName("userfirstName" + i);
                 userEntity.setLastName("userLastName" +i);
-                userEntity.setPassword("1234567");
+                userEntity.setPassword(passwordEncoder.encode("123456"));
                 userEntity.setSex("MALE");
-                userEntity.setReputation(1);
+                userEntity.setReputation(2);
+                userEntity.setRoles(Arrays.asList(roleUser));
 
                 userRepository.save(userEntity);
             }
