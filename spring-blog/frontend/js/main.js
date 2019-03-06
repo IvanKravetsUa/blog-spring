@@ -1,5 +1,33 @@
 $(document).ready(function () {
 
+  $("#logoutBtn").hide();
+
+  let authToken = localStorage.getItem("auth_token");
+  if (authToken) {
+    $.ajaxSetup({
+      headers : {
+        'Authorization' : 'Bearer ' + authToken 
+      }
+    });
+
+    let role = JSON.parse(atob(authToken.split(".")[1]));
+    console.log(role)
+
+    if(role.auth == "ROLE_USER") {
+      // $("#userInformation").hide();
+    }
+    $("#logoutBtn").show();  
+  } else {
+    // location.href= "block.html";
+   
+    $("#userInformation").hide();
+  }
+
+  $("#logoutBtn").on("click", function() {
+    localStorage.removeItem("auth_token");
+    window.location.href = "index.html";
+  })
+
   let userId = 1;
   let postId = 5;
 
@@ -12,8 +40,6 @@ $(document).ready(function () {
   // deletePost(postId);
 
   $("#sendRegistration").submit(signup);
-
-  $("#submitLogin").submit(login);
 
   $(document).on("click", "#postView button", function (e) {
     let btnId = e.target.id;
@@ -403,27 +429,6 @@ function showPostById(postId) {
 
     }
   });
-}
-
-function login() {
-
-  let userEmailLogin = $("#userEmailLogin").val();
-  let userPasswordLogin = $("#userPassLogin").val();
-
-  let userLogin = {
-    email: userEmailLogin,
-    password: userPasswordLogin
-  };
-
-  // $.ajax({
-  //     url: "http://localhost:8080/users",
-  //     method: "POST",
-  //     contentType: "application/json",
-  //     data: JSON.stringify(userLogin),
-  //     complete: function(serverResponse) {
-  //         console.log(serverResponse);
-  //     }
-  // });
 }
 
 

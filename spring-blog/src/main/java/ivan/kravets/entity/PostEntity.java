@@ -33,7 +33,7 @@ public class PostEntity extends BaseEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "post_tag",
             joinColumns = @JoinColumn(name = "post_id"),
@@ -41,7 +41,7 @@ public class PostEntity extends BaseEntity {
     )
     private Set<TagEntity> tags = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "post_comment",
             joinColumns = @JoinColumn(name = "post_id"),
@@ -49,7 +49,7 @@ public class PostEntity extends BaseEntity {
     )
     private Set<CommentEntity> comments = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "post_mark",
             joinColumns = @JoinColumn(name = "post_id"),
