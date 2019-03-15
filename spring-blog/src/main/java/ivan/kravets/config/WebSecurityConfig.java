@@ -57,11 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/auth/signup", "/auth/signin").permitAll()
-                .antMatchers(HttpMethod.GET,"/posts/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/posts/**", "/users/image/**").permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/users/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/users/**", "/tags/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated();
 
         http.exceptionHandling().authenticationEntryPoint(handleUnauthorizedResponse)

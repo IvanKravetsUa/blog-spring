@@ -1,38 +1,39 @@
 $(document).ready(function () {
+  let userId = localStorage.getItem("authorized_userId");
+  let postId = 5;
 
   $("#logoutBtn").hide();
 
   let authToken = localStorage.getItem("auth_token");
   if (authToken) {
     $.ajaxSetup({
-      headers : {
-        'Authorization' : 'Bearer ' + authToken 
+      headers: {
+        'Authorization': 'Bearer ' + authToken
       }
     });
 
     let role = JSON.parse(atob(authToken.split(".")[1]));
     console.log(role)
 
-    if(role.auth == "ROLE_USER") {
+    if (role.auth == "ROLE_USER") {
       // $("#userInformation").hide();
     }
-    $("#logoutBtn").show();  
+    $("#logoutBtn").show();
   } else {
     // location.href= "block.html";
-   
+
     $("#userInformation").hide();
   }
 
-  $("#logoutBtn").on("click", function() {
+  $("#logoutBtn").on("click", function () {
     localStorage.removeItem("auth_token");
+    localStorage.removeItem("authorized_userId");
     window.location.href = "index.html";
   })
 
-  let userId = 1;
-  let postId = 5;
-
   showAllUsers();
   showAllPosts();
+  showAllTags();
 
   showPostById(postId);
   showUserById(userId);
@@ -52,7 +53,6 @@ $(document).ready(function () {
     let inputId = e.target.id;
     let userId = inputId.split("-")[1];
     // console.log(userId)
-
     uploadUserAvatar(userId);
   })
 
@@ -81,6 +81,25 @@ $(document).ready(function () {
   });
 
 });
+
+function showAllTags() {
+  $.ajax({
+    url: "http://localhost:8080/tags",
+    method: "GET",
+    contentType: "application/json",
+    complete: function (serverResponse) {
+      let tags = serverResponse.responseJSON;
+      $.each(tags, function (key, tag) {
+        $("#tagsSelect").append(
+          `
+          <option value="${tag.id}">${tag.name}</option>
+        `)
+      });
+    }
+  });
+}
+
+
 
 function uploadUserAvatar(userId) {
   let formData = new FormData();
@@ -130,13 +149,15 @@ function signup() {
       complete: function (serverResponse) {
         console.log(serverResponse);
         if (serverResponse.status == 201) {
-          alert("User added to database");
+          alert("Success");
+          window.location.href = "index.html";
         }
       }
     });
   } else {
     alert("Passwords don't match")
   }
+  return false;
 }
 
 function showUserById(userId) {
@@ -148,10 +169,11 @@ function showUserById(userId) {
     contentType: "application/json",
     complete: function (serverResponse) {
       let userById = serverResponse.responseJSON;
+      localStorage.setItem("userAccountInformationById", userById.id);
       $("#accountInformationBody").append(
         `
              <p><i class="far fa-user-circle"></i>Avatar</p>
-             <img src="${userById.image != null? (IMAGE_URL + userById.image) : ""}" class="img-fluid"">
+             <img src="${userById.image != null ? (IMAGE_URL + userById.image) : ""}" class="img-fluid"">
               <div class="input-group m-2">
                <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupFileAddon01">Upload new avatar</span>
@@ -206,8 +228,10 @@ function showAllUsers() {
       console.log(serverResponse.responseJSON);
       let users = serverResponse.responseJSON;
 
-      $.each(users, function (key, value) {
-
+      $.each(users, function (key, user) {
+        if (user.email == localStorage.getItem("user_email")) {
+          localStorage.setItem("authorized_userId", user.id)
+        }
       });
     }
   });

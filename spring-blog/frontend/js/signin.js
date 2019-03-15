@@ -25,6 +25,7 @@ function signin() {
             if(res.status == 200) {
                 if (result.token) {
                     localStorage.setItem("auth_token", result.token)
+                    localStorage.setItem("user_email", $("#userEmailLogin").val())
 
                     window.location.href = "index.html";
                 }

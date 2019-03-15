@@ -69,55 +69,56 @@
     <div class="registration-form">
       <div class="container">
 
-        <form id="sendRegistration" class="text-center border border-light p-5 m-5 z-depth-5">
-          <h2>Registration form</h2>
-          <br>
-          <div class="form-froup">
-            <input id="userFirstNameRegistration" type="text" class="form-control" aria-describedby="firstNameHelp"
-              placeholder="FirstName" required>
-            <small id="firstNameHelp" class="form-text text-muted">
-              Введіть імя
-            </small>
+        <form id="sendRegistration" class="border border-light p-5 m-5 z-depth-5">
+          <h2 class="text-center">Registration form</h2>
+          
+          <div class="md-form md-outline">
+            <i class="fas fa-user prefix"></i>
+            <input type="text" id="userFirstNameRegistration" class="form-control" required>
+            <label for="userFirstNameRegistration"><strong>First Name</strong></label>
+            <small class="form-text text-muted text-center">Enter first name</small>
           </div>
-          <br>
-          <div class="form-froup">
-            <input id="userLastNameRegistration" type="text" class="form-control" aria-describedby="lastNameHelp"
-              placeholder="LastName" required>
-            <small id="lastNameHelp" class="form-text text-muted">
-              Введіть прізвище
-            </small>
+  
+          <div class="md-form md-outline">
+              <i class="fas fa-user-circle prefix"></i>
+              <input type="text" id="userLastNameRegistration" class="form-control" required>
+              <label for="userLastNameRegistration"><strong>Last Name</strong></label>
+              <small class="form-text text-muted text-center">Enter last name</small>
           </div>
-          <br>
-          <div class="form-froup">
-            <input id="userEmailRegistration" type="email" class="form-control" aria-describedby="emailHelp"
-              placeholder="Email" required>
-            <small id="emailHelp" class="form-text text-muted">
-              Введіть емейл
-            </small>
+
+          <div class="md-form md-outline">
+              <i class="fas fa-envelope prefix"></i>
+              <input type="email" id="userEmailRegistration" class="form-control" required>
+              <label for="userEmailRegistration"><strong>E-mail address</strong></label>
+              <small class="form-text text-muted text-center">Enter email address</small>
           </div>
-          <br>
-          <div class="form-froup">
-            <input id="userPassRegistration" type="password" class="form-control" placeholder="Password" required>
-            <small id="userPassHelp" class="form-text text-muted">
-              Мінімальний пароль 10 символів</small>
+
+          <div class="md-form md-outline">
+              <i class="fas fa-lock prefix"></i>
+              <input type="password" id="userPassRegistration" class="form-control" required>
+              <label for="userPassRegistration"><strong>Password</strong></label>
+              <small class="form-text text-muted text-center">Enter password minimum size 6 characters</small>
           </div>
-          <br>
-          <div class="form-froup">
-            <input id="userPassConfirmRegistration" type="password" class="form-control" placeholder="Password Confirm"
-              required>
-            <small id="userPassConfirmHelp" class="form-text text-muted">
-              Повинен відповідати паролю</small>
+
+          <div class="md-form md-outline">
+              <i class="fas fa-lock prefix"></i>
+              <input type="password" id="userPassConfirmRegistration" class="form-control" required>
+              <label for="userPassConfirmRegistration"><strong>Password Comfirm</strong></label>
+              <small class="form-text text-muted text-center">Enter password confirm</small>
           </div>
-          <br>
+         
           <div class="form-froup">
             <select id="userSexRegistration" class="browser-default custom-select">
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
-            <small id="sexHelp" class="form-text text-muted">
-              Стать</small>
+            <small id="sexHelp" class="form-text text-muted text-center">
+              Sex type</small>
           </div>
-          <button id="btnSendRegistration" type="submit" class="btn btn-primary">Send</button>
+          <hr>
+          <div>
+          <button id="btnSendRegistration" type="submit" class="btn btn-primary btn-block">Send</button>
+        </div>
         </form>
       </div>
     </div>
