@@ -15,10 +15,7 @@ import ivan.kravets.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -39,16 +36,6 @@ public class CommentServiceImpl implements CommentService {
     public CommentDTO saveComment(Long idUser, Long idPost, CommentDTO comment) {
 
         CommentEntity commentEntity = objectMapper.map(comment, CommentEntity.class);   // dtoToEntityMapper(comment);
-
-//        boolean exists = userRepository.existsById(idUser);
-//        if (!exists) {
-//            return null;
-//        }
-//
-//        boolean existsPost = postRepository.existsById(idPost);
-//        if (!existsPost) {
-//            return null;
-//        }
 
         UserEntity userFromDB = userRepository.findById(idUser).orElseThrow(() -> new NotFoundException("User with id [" +idUser+ "] not found"));
         commentEntity.setUser(userFromDB);
@@ -71,49 +58,16 @@ public class CommentServiceImpl implements CommentService {
         List<CommentEntity> commentEntities = commentRepository.findAll();
         List<CommentDTO> commentDTOS = objectMapper.mapAll(commentEntities, CommentDTO.class); //new ArrayList<>();
 
-//        for (CommentEntity commentEntity : commentEntities) {
-//            CommentDTO commentDTO = entityToDtoMapper(commentEntity);
-//            commentDTOS.add(commentDTO);
-//        }
 
         return commentDTOS;
     }
 
-//    private CommentDTO entityToDtoMapper(CommentEntity commentEntity) {
-//        CommentDTO commentDTO = new CommentDTO();
-//        commentDTO.setId(commentEntity.getId());
-//        commentDTO.setBody(commentEntity.getBody());
-//
-//        UserEntity userEntity = commentEntity.getUser();
-//        UserDTO userDTO = new UserDTO();
-//        userDTO.setId(userEntity.getId());
-//        userDTO.setFirstName(userEntity.getFirstName());
-//        userDTO.setLastName(userEntity.getLastName());
-//        userDTO.setNickName(userEntity.getNickName());
-//        userDTO.setAccountCreatedDate(userEntity.getAccountCreatedDate());
-//
-//        commentDTO.setUser(userDTO);
-//
-//        Set<PostEntity> postFromDB = commentEntity.getPosts();
-//        Set<PostDTO> postDTOS = new HashSet<>();
-//
-//        for (PostEntity postEntity : postFromDB) {
-//            PostDTO postDTO = new PostDTO();
-//            postDTO.setId(postEntity.getId());
-//            postDTO.setTitle(postEntity.getTitle());
-//
-//            postDTOS.add(postDTO);
-//
-//        }
-//        commentDTO.setPosts(postDTOS);
-//
-//        return commentDTO;
-//    }
+    @Override
+    public CommentDTO findCommentById(Long id) {
 
-//    private CommentEntity dtoToEntityMapper(CommentDTO commentDTO) {
-//        CommentEntity commentEntity = new CommentEntity();
-//        commentEntity.setBody(commentDTO.getBody());
-//
-//        return commentEntity;
-//    }
+        CommentEntity commentEntity = commentRepository.findById(id).orElseThrow(() -> new NotFoundException("Comment with id" + id+ " not found"));
+        CommentDTO commentDTO = objectMapper.map(commentEntity, CommentDTO.class);
+
+        return commentDTO;
+    }
 }

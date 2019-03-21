@@ -2,9 +2,11 @@ package ivan.kravets.service.impl;
 
 
 import ivan.kravets.domain.TagDTO;
+import ivan.kravets.entity.PostEntity;
 import ivan.kravets.entity.TagEntity;
 import ivan.kravets.exceptions.AlreadyExistsException;
 import ivan.kravets.exceptions.NotFoundException;
+import ivan.kravets.repository.PostRepository;
 import ivan.kravets.repository.TagRepository;
 import ivan.kravets.service.TagService;
 import ivan.kravets.utils.ObjectMapperUtils;
@@ -24,14 +26,18 @@ public class TagServiceImpl implements TagService {
     @Autowired
     private ObjectMapperUtils objectMapper;
 
+    @Autowired
+    private PostRepository postRepository;
+
     @Override
-    public TagDTO saveTag(TagDTO tag) {
+    public TagDTO saveTag(Long id, TagDTO tag) {
         boolean exists = tagRepository.existsByName(tag.getName());
 
         if (exists) {
             throw new AlreadyExistsException("Tag with name" +tag.getName()+ "] already exists");
         }
 
+        PostEntity postEntity = postRepository.findById(id).get();
         TagEntity tagEntity = objectMapper.map(tag, TagEntity.class);  //dtoToEntityMapper(tag);
         tagRepository.save(tagEntity);
         tag.setId(tagEntity.getId());

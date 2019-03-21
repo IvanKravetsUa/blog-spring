@@ -1,6 +1,10 @@
 $(document).ready(function () {
-  let userId = localStorage.getItem("authorized_userId");
-  let postId = 5;
+  let userId = localStorage.getItem("autorPostId");
+  let postId = localStorage.getItem("postById");
+
+  $(document).on("click", "#accountMain", function (e) {
+    localStorage.setItem("autorPostId", localStorage.getItem("authorized_userId"))
+  });
 
   $("#logoutBtn").hide();
 
@@ -15,13 +19,44 @@ $(document).ready(function () {
     let role = JSON.parse(atob(authToken.split(".")[1]));
     console.log(role)
 
-    if (role.auth == "ROLE_USER") {
-      // $("#userInformation").hide();
+    $(document).on("click", "#postView button", function (e) {
+      let btnId = e.target.id;
+      let postId = btnId.split("-")[1];
+      if (role.auth == "ROLE_ADMIN") {
+        deletePost(postId);
+      } else {
+        alert("You are not")
+      }
+    });
+
+    if (role.auth == "ROLE_USER" || role.auth == "ROLE_ADMIN") {
+
+      $("#creatingPost").on("submit", function () {
+        creatingPost(localStorage.getItem("authorized_userId"))
+        return false;
+      });
+
+      $(document).on("click", "#postCardFooterLike button", function (e) {
+        let markStatus = 1
+        creatingLikeByPost(localStorage.getItem("authorized_userId"), postId, markStatus)
+        // location.reload();
+        $("#postLike-"+ postId).hide();
+        $("#postDislike-"+ postId).hide();
+        return false;
+      });
+      $(document).on("click", "#postCardFooterDislike button", function (e) {
+        let markStatus = 0
+        creatingLikeByPost(localStorage.getItem("authorized_userId"), postId, markStatus)
+        // location.reload();
+        $("#postLike-"+ postId).hide();
+        $("#postDislike-"+ postId).hide();
+        return false;
+      });
     }
     $("#logoutBtn").show();
   } else {
     // location.href= "block.html";
-
+    $("#postCreatingPage").hide();
     $("#userInformation").hide();
   }
 
@@ -35,24 +70,20 @@ $(document).ready(function () {
   showAllPosts();
   showAllTags();
 
-  showPostById(postId);
   showUserById(userId);
-
-  // deletePost(postId);
+  showPostById(postId);
+  showPostOfTheDay(localStorage.getItem("postOfTheDay"));
 
   $("#sendRegistration").submit(signup);
 
-  $(document).on("click", "#postView button", function (e) {
-    let btnId = e.target.id;
-    let postId = btnId.split("-")[1];
-    deletePost(postId);
-  });
+  $(document).on("change", "#postImage input", function (e) {
+    uploadPostImage(postId);
+  })
 
   $(document).on("change", "#accountInformationBody input", function (e) {
     // console.log(e.target.id)
     let inputId = e.target.id;
     let userId = inputId.split("-")[1];
-    // console.log(userId)
     uploadUserAvatar(userId);
   })
 
@@ -69,18 +100,102 @@ $(document).ready(function () {
     showAllPosts(pageNumber);
   });
 
-  $(document).on("click", "#postCardFooterLike button", function (e) {
-    console.log(e.target.id);
-    let btnId = e.target.id;
-    let postId = btnId.split("-")
-    console.log("postId" + postId);
+  $(document).on("click", "#postView strong", function (e) {
+    let aViewId = e.target.id
+    let postViewId = aViewId.slice(10);
+    localStorage.setItem("postById", postViewId)
+    window.location.href = "postPage.html";
+    console.log(postViewId);
   });
 
-  $(document).on("click", "#postView", function (e) {
-    console.log(e.target.id);
+  $(document).on("click", "#postAuthorPost strong", function (e) {
+    let autorPostId = e.target.id.slice(9);
+    showUserById(autorPostId);
+    localStorage.setItem("autorPostId", autorPostId)
+    window.location.href = "accountPage.html";
+    console.log(autorPostId);
   });
 
 });
+
+function creatingLikeByPost(userId, postId, markStatus) {
+  let like = {
+    markStatus: markStatus
+  }
+  $.ajax({
+    url: "http://localhost:8080/marks/" + userId + "/post/" + postId,
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(like),
+    complete: function (serverResponse) {
+      console.log(serverResponse);
+      if (serverResponse.status == 200) {
+        alert("Success");
+      }
+    }
+  });
+}
+
+function creatingDislikeByPost(userId, postId) {
+  let like = {
+    markStatus: 0
+  }
+  $.ajax({
+    url: "http://localhost:8080/marks/" + userId + "/post/" + postId,
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(like),
+    complete: function (serverResponse) {
+      console.log(serverResponse);
+    }
+  });
+}
+
+function creatingPost(userId) {
+  let tagsSelected = []
+  $("#tagsSelect :selected").each(function () {
+    tagsSelected.push({"name": $(this).val()});
+  });
+  tagsSelected.push({"name":  $("#postTagCreating").val()} )
+
+  let post = {
+    title: $("#postTitleCreating").val(),
+    description: $("#postBodyCreating").val(),
+    tags: tagsSelected
+  };
+
+  $.ajax({
+    url: "http://localhost:8080/posts/user/" + userId,
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(post),
+    complete: function (serverResponse) {
+      let post = serverResponse.responseJSON;
+      console.log(post)
+    }
+  });
+}
+
+function uploadPostImage(postId) {
+  let formData = new FormData();
+  formData.append("imageFile", $("#image-" + postId)[0].files[0]);
+  $("#imagesForUpload").append(`
+        <img src="${formData}" class="img-fluid"">
+      `)
+
+  $.ajax({ // localhost:8080/users/10/image
+    url: "http://localhost:8080/posts/" + postId + "/image",
+    method: "POST",
+    contentType: false,
+    processData: false,
+    data: formData,
+    complete: function (res) {
+      if (res.status == 202) {
+        alert("success")
+      }
+    }
+  })
+}
 
 function showAllTags() {
   $.ajax({
@@ -92,14 +207,12 @@ function showAllTags() {
       $.each(tags, function (key, tag) {
         $("#tagsSelect").append(
           `
-          <option value="${tag.id}">${tag.name}</option>
+          <option id="tag${tag.id}" value="${tag.name}">${tag.name}</option>
         `)
       });
     }
   });
 }
-
-
 
 function uploadUserAvatar(userId) {
   let formData = new FormData();
@@ -142,7 +255,7 @@ function signup() {
     };
 
     $.ajax({
-      url: "http://localhost:8080/users",
+      url: "http://localhost:8080/auth/signup",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify(user),
@@ -169,15 +282,13 @@ function showUserById(userId) {
     contentType: "application/json",
     complete: function (serverResponse) {
       let userById = serverResponse.responseJSON;
+    
       localStorage.setItem("userAccountInformationById", userById.id);
       $("#accountInformationBody").append(
         `
              <p><i class="far fa-user-circle"></i>Avatar</p>
              <img src="${userById.image != null ? (IMAGE_URL + userById.image) : ""}" class="img-fluid"">
               <div class="input-group m-2">
-               <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupFileAddon01">Upload new avatar</span>
-               </div>
                <div class="custom-file">
                  <input type="file" class="custom-file-input" id="image-${userById.id}" aria-describedby="inputGroupFileAddon01">
                  <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
@@ -192,7 +303,7 @@ function showUserById(userId) {
         
               <div class="col">
                   <p>First Name</p>
-                  <h5>${userById.lastName}</h5>
+                  <h5>${userById.firstName}</h5>
                 </div>
 
                 <div class="col">
@@ -265,7 +376,7 @@ function showAllPosts(pageNumber) {
     complete: function (serverResponse) {
       console.log(serverResponse.responseJSON);
       let posts = serverResponse.responseJSON;
-      let tagsInPost = posts.tags
+      localStorage.setItem("marksOfTheDay", -1)
 
       $("#postView").empty();
 
@@ -275,9 +386,18 @@ function showAllPosts(pageNumber) {
 
       $.each(posts.content, function (key, post) {
         let marksTotal = 0;
-        post.marks.forEach(function () {
-          marksTotal++
-        });
+        $.each(post.marks, function(key, mark){
+          if (mark.markStatus == 1) {
+            marksTotal++
+          } else {
+            marksTotal--
+          }
+        })
+
+        if(marksTotal > localStorage.getItem("marksOfTheDay")){
+          localStorage.setItem("marksOfTheDay", marksTotal)
+          localStorage.setItem("postOfTheDay", post.id)
+        }
 
         let tagsNames = [];
         $.each(post.tags, function (key, tag) {
@@ -286,7 +406,7 @@ function showAllPosts(pageNumber) {
 
         $("#postView").append(
           `
-          <div id = "postViewId-${post.id}" class="postsBody col-lg-6 col-md-12"></p>
+          <div  class="postsBody col-lg-6 col-md-12"></p>
             <div class="view overlay rounded z-depth-1-half mb-3">
               <img src="images/img1.jpeg" alt="" class="img-fluid">
               <a href="#">
@@ -309,9 +429,9 @@ function showAllPosts(pageNumber) {
                   ${post.createdDate}
             </p>
           </div>
-            <h4>
-              <a href="postPage.html">
-                <strong>${post.title}</strong>
+            <h4 >
+              <a href="#">
+                <strong id = "postViewId${post.id}">${post.title}</strong>
               </a>
              
             </h4>
@@ -322,6 +442,78 @@ function showAllPosts(pageNumber) {
                     `
         );
       });
+    }
+  });
+}
+
+function showPostOfTheDay(postOfTheDayId) {
+  $.ajax({
+    url: "http://localhost:8080/posts/" + postOfTheDayId,
+    method: "GET",
+    contentType: "application/json",
+    complete: function (serverResponse) {
+      let postOfTheDay = serverResponse.responseJSON
+
+      let postMarksSize = 0;
+      $.each(postOfTheDay.marks, function(key, mark){
+        if (mark.markStatus == 1) {
+          postMarksSize++
+        } else {
+          postMarksSize--
+        }
+      })
+
+      let tagsNames = [];
+        $.each(postOfTheDay.tags, function (key, tag) {
+          tagsNames.push(tag.name)
+        });
+
+      $("#postOfTheDay").append(`
+      <div class="author">
+      <!-- <img style="width: 4rem;" src="images/img3.jpeg" alt="" class="d-flex mr-3"> -->
+      <a>
+          <p><strong>Author</strong></p>
+          <h4 class="mt-0 mb-1 font-weight-bold">
+              ${postOfTheDay.user.firstName} ${postOfTheDay.user.lastName}
+          </h4>
+      </a>
+      <hr>
+      <div class="media-header">
+          <a>
+              <h4 class="mt-0 mb-1 font-weight-bold">
+                  ${postOfTheDay.title}
+              </h4>
+          </a>
+          <br>
+          <div class="media-body">
+              <a class="mt-0 mb-1 font-weight">
+                  ${postOfTheDay.description}
+              </a>
+          </div>
+      </div>
+      <hr>
+      <div class="card-footer">
+          <!-- лайки і теги -->
+          <div class="media-likes row">
+              <!-- лайки -->
+              <div class="media-likes red-text col">
+                  <h6><strong>Likes <p><i class="fas fa-heart"></i> ${postMarksSize}</p></strong>
+                      
+                  </h6>
+              </div>
+          </div>
+          <!-- теги -->
+          <div class="media-tags col">
+              <a href="#" class="light-blue-text">
+                  <h6>
+                      <p><strong>Tags:</strong></p>
+                      <i class="fas fa-tags"></i>
+                      <strong>${tagsNames}</strong>
+                  </h6>
+              </a>
+          </div>
+      </div>
+      `)
     }
   });
 }
@@ -345,11 +537,14 @@ function showPostById(postId) {
       });
 
       let postMarksSize = 0;
-      marksByPost.forEach(function () {
-        postMarksSize++
-      });
-
-
+      $.each(marksByPost, function(key, mark){
+        if (mark.markStatus == 1) {
+          postMarksSize++
+        } else {
+          postMarksSize--
+        }
+      })
+      
       $("#postCardBody").append(
         `
         <div class="card-body">
@@ -368,15 +563,30 @@ function showPostById(postId) {
         </div>
         `
       );
+      
+      $("#postTotalMarks").append(
+        `<h5><i class="fas fa-heart"></i><strong>Likes ${postMarksSize}</strong></h5>  
+        </p>
+        `
+      );
+
       $("#postCardFooterLike").append(
-        `<h5><i class="fas fa-heart"></i><strong>Likes ${postMarksSize}</strong></h5>
+        `
           <button id="postLike-${postById.id}" type="button" class="btn btn-outline-danger waves-effec p-2"><i
                   class="far fa-thumbs-up" aria-hidden="true"></i></button>
+         
+        </p>
+        `
+      );
+
+      $("#postCardFooterDislike").append(
+        `
           <button id="postDislike-${postById.id}" type="button" class="btn btn-outline-danger waves-effec p-2"><i
                   class="far fa-thumbs-down" aria-hidden="true"></i></button>
         </p>
         `
       );
+
       $.each(tagsInPost, function (key, tags) {
         $("#postCardFooterTags").append(
           `
@@ -405,7 +615,7 @@ function showPostById(postId) {
             <img style="width:100px" src="images/autorPost.jpg" alt=""
                 class="d-flex mb-3 mx-auto z-depth-1">
             <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                <h5 class="mt-0 font-weight-bold">${userByPost.firstName} ${userByPost.lastName}</h5>
+                <h5 class="mt-0 font-weight-bold"><strong id="autorPost${userByPost.id}" >${userByPost.firstName} ${userByPost.lastName}<strong></h5>
                 <p>Reputation: ${userByPost.reputation}</p>
             </div>
         </div>
@@ -431,7 +641,7 @@ function showPostById(postId) {
         <div class="media d-block d-md-flex mt-4">
             <img src="images/portred.jpg" alt="" class="d-flex mb-3 mx-auto">
             <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                <h5 class="mt-0 front-weight-bold">${comments.user.firstName} ${comments.user.lastName}
+                <h5 class="mt-0 front-weight-bold"><strong>${comments.user.firstName} ${comments.user.lastName}</strong>
                     <a href="#" class="pull-right">
                         <i class="fa fa-reply"></i>
                     </a>
@@ -453,6 +663,8 @@ function showPostById(postId) {
 
     }
   });
+
+  
 }
 
 

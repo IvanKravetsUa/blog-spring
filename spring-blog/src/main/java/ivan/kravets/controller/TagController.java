@@ -18,9 +18,9 @@ public class TagController {
     @Autowired
     private TagService tagService;
 
-    @PostMapping
-    public ResponseEntity<?> createTag(@Valid @RequestBody TagDTO tag) {
-        TagDTO tagDTO = tagService.saveTag(tag);
+    @PostMapping("/{postId:[0-9]{1,5}}")
+    public ResponseEntity<?> createTag(@Valid @PathVariable ("postId") Long id, @RequestBody TagDTO tag) {
+        TagDTO tagDTO = tagService.saveTag(id, tag);
         return new ResponseEntity<>(tagDTO, HttpStatus.CREATED);
     }
 

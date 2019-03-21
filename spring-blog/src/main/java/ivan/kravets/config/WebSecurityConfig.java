@@ -62,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/users/**", "/tags/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.POST, "/posts/**", "/marks/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated();
 
         http.exceptionHandling().authenticationEntryPoint(handleUnauthorizedResponse)

@@ -37,10 +37,10 @@
               <a href="index.html" class="nav-link waves-effect"><strong>Home</strong></a>
             </li>
             <li class="nav-item">
-              <a href="accountPage.html" class="nav-link waves-effect"><strong>Account</strong></a>
+              <a href="accountPage.html" class="nav-link waves-effect"><strong id="accountMain">Account</strong></a>
             </li>
             <li class="nav-item">
-              <a href="postPage.html" class="nav-link waves-effect"><strong>Posts</strong></a>
+              <a href="creationPostPage.html" class="nav-link waves-effect"><strong>Creating Post</strong></a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link waves-effect" data-toggle="modal" data-target="#aboutModal"><strong>About
@@ -59,6 +59,11 @@
                 data-target="#loginModal"><strong>Log in</strong></a>
             </li>
           </ul>
+          <ul class="navbar-nav nav-flex-icons">
+            <li class="nav-item">
+              <button id="logoutBtn" type="button" class="btn btn-outline-info waves-effect px-3">Log out</i></button>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -71,42 +76,42 @@
 
         <form id="sendRegistration" class="border border-light p-5 m-5 z-depth-5">
           <h2 class="text-center">Registration form</h2>
-          
+
           <div class="md-form md-outline">
             <i class="fas fa-user prefix"></i>
             <input type="text" id="userFirstNameRegistration" class="form-control" required>
             <label for="userFirstNameRegistration"><strong>First Name</strong></label>
             <small class="form-text text-muted text-center">Enter first name</small>
           </div>
-  
+
           <div class="md-form md-outline">
-              <i class="fas fa-user-circle prefix"></i>
-              <input type="text" id="userLastNameRegistration" class="form-control" required>
-              <label for="userLastNameRegistration"><strong>Last Name</strong></label>
-              <small class="form-text text-muted text-center">Enter last name</small>
+            <i class="fas fa-user-circle prefix"></i>
+            <input type="text" id="userLastNameRegistration" class="form-control" required>
+            <label for="userLastNameRegistration"><strong>Last Name</strong></label>
+            <small class="form-text text-muted text-center">Enter last name</small>
           </div>
 
           <div class="md-form md-outline">
-              <i class="fas fa-envelope prefix"></i>
-              <input type="email" id="userEmailRegistration" class="form-control" required>
-              <label for="userEmailRegistration"><strong>E-mail address</strong></label>
-              <small class="form-text text-muted text-center">Enter email address</small>
+            <i class="fas fa-envelope prefix"></i>
+            <input type="email" id="userEmailRegistration" class="form-control" required>
+            <label for="userEmailRegistration"><strong>E-mail address</strong></label>
+            <small class="form-text text-muted text-center">Enter email address</small>
           </div>
 
           <div class="md-form md-outline">
-              <i class="fas fa-lock prefix"></i>
-              <input type="password" id="userPassRegistration" class="form-control" required>
-              <label for="userPassRegistration"><strong>Password</strong></label>
-              <small class="form-text text-muted text-center">Enter password minimum size 6 characters</small>
+            <i class="fas fa-lock prefix"></i>
+            <input type="password" id="userPassRegistration" class="form-control" required>
+            <label for="userPassRegistration"><strong>Password</strong></label>
+            <small class="form-text text-muted text-center">Enter password minimum size 6 characters</small>
           </div>
 
           <div class="md-form md-outline">
-              <i class="fas fa-lock prefix"></i>
-              <input type="password" id="userPassConfirmRegistration" class="form-control" required>
-              <label for="userPassConfirmRegistration"><strong>Password Comfirm</strong></label>
-              <small class="form-text text-muted text-center">Enter password confirm</small>
+            <i class="fas fa-lock prefix"></i>
+            <input type="password" id="userPassConfirmRegistration" class="form-control" required>
+            <label for="userPassConfirmRegistration"><strong>Password Comfirm</strong></label>
+            <small class="form-text text-muted text-center">Enter password confirm</small>
           </div>
-         
+
           <div class="form-froup">
             <select id="userSexRegistration" class="browser-default custom-select">
               <option value="male">Male</option>
@@ -117,8 +122,8 @@
           </div>
           <hr>
           <div>
-          <button id="btnSendRegistration" type="submit" class="btn btn-primary btn-block">Send</button>
-        </div>
+            <button type="submit" class="btn btn-primary btn-block">Send</button>
+          </div>
         </form>
       </div>
     </div>

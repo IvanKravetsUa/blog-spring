@@ -37,10 +37,10 @@
               <a href="index.html" class="nav-link waves-effect"><strong>Home</strong></a>
             </li>
             <li class="nav-item">
-              <a href="accountPage.html" class="nav-link waves-effect"><strong>Account</strong></a>
+              <a href="accountPage.html" class="nav-link waves-effect"><strong id="accountMain">Account</strong></a>
             </li>
             <li class="nav-item">
-              <a href="postPage.html" class="nav-link waves-effect"><strong>Posts</strong></a>
+              <a href="creationPostPage.html" class="nav-link waves-effect"><strong>Creating Post</strong></a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link waves-effect" data-toggle="modal" data-target="#aboutModal"><strong>About
@@ -90,7 +90,7 @@
             <div class="card-header">
               <h5><strong>Detailed information</strong></h5>
               <a href="#" class="nav-link waves-effect border border-dark rounded" data-toggle="modal"
-              data-target="#detailedInformationModal">Change</a>
+                data-target="#detailedInformationModal">Change</a>
             </div>
             <div class="card-body">
               <p><i class="fas fa-birthday-cake"></i>Date of birth <h5>20/08/2018</h5>
@@ -116,7 +116,8 @@
   </main>
 
   <!-- більше деталей -->
-  <div class="modal fade" id="detailedInformationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+  <div class="modal fade" id="detailedInformationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -131,7 +132,7 @@
               <div class="form-froup">
                 <!-- <input id="dateOfBirthRegistration" type="text" class="form-control" aria-describedby="dateOfBirthHelp"
                   placeholder="dateOfBirth" required> -->
-                  <!-- <div class="input-group date" id="datetimepicker1">
+                <!-- <div class="input-group date" id="datetimepicker1">
                     <input type="text" class="form-control" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
@@ -141,9 +142,9 @@
                   Введіть дату народження
                 </small> -->
                 <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                <label class="control-label" for="datepicker">Select Date</label>
-                <input type="text" class="form-control" id="datepicker">
-              </div>
+                  <label class="control-label" for="datepicker">Select Date</label>
+                  <input type="text" class="form-control" id="datepicker">
+                </div>
               </div>
               <br>
               <div class="form-froup">
@@ -169,8 +170,8 @@
               </div>
               <br>
               <div class="form-froup">
-                <input id="userPassConfirmRegistration" type="password" class="form-control" placeholder="Password Confirm"
-                  required>
+                <input id="userPassConfirmRegistration" type="password" class="form-control"
+                  placeholder="Password Confirm" required>
                 <small id="userPassConfirmHelp" class="form-text text-muted">
                   Повинен відповідати паролю</small>
               </div>

@@ -31,4 +31,11 @@ public class CommentController {
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
+
+    @GetMapping("/{commentId:[0-9]{1,5}}")
+    public ResponseEntity<?> getCommentById(@PathVariable ("commentId") Long id) {
+        CommentDTO commentDTO = commentService.findCommentById(id);
+        return new ResponseEntity<>(commentDTO, HttpStatus.OK);
+    }
+
 }

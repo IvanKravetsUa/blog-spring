@@ -1,6 +1,7 @@
 package ivan.kravets.controller;
 
 import ivan.kravets.domain.PostDTO;
+import ivan.kravets.service.FileStorageService;
 import ivan.kravets.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -15,6 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping("posts")
 public class PostController {
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     @Autowired
     private PostService postService;
@@ -32,7 +37,7 @@ public class PostController {
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
-    @GetMapping("{postId:[0-9]{1,5}}")
+    @GetMapping("/{postId:[0-9]{1,5}}")
     public ResponseEntity<?> getPostById(@PathVariable("postId") Long id) {
         PostDTO post = postService.findPostById(id);
         return new ResponseEntity<>(post, HttpStatus.OK);
@@ -62,5 +67,17 @@ public class PostController {
     public ResponseEntity<?> deletePostById(@PathVariable("postId") Long id) {
         postService.deletePost(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("{postId}/image")
+    public ResponseEntity<?> uploadImage(
+            @PathVariable("postId") Long id,
+            @RequestParam("imageFile") MultipartFile file) {
+
+        System.out.println(file.getOriginalFilename());
+
+        fileStorageService.storeFile(file);
+        postService.addImageToPost(id, file.getOriginalFilename());
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }

@@ -37,10 +37,11 @@
                             <a href="index.html" class="nav-link waves-effect"><strong>Home</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a href="accountPage.html" class="nav-link waves-effect"><strong>Account</strong></a>
+                            <a href="accountPage.html" class="nav-link waves-effect"><strong id="accountMain">Account</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a href="postPage.html" class="nav-link waves-effect"><strong>Posts</strong></a>
+                            <a href="creationPostPage.html" class="nav-link waves-effect"><strong>Creating
+                                    Post</strong></a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link waves-effect" data-toggle="modal"
@@ -74,47 +75,55 @@
 
 
     <main class="mt-2 pt-5">
-        <div class="registration-form">
+        <div id="postCreatingPage" class="registration-form">
             <div class="container">
-
-                <form class="border border-light p-5 m-5 z-depth-5">
+                <form id="creatingPost" class="border border-light p-5 m-5 z-depth-5">
                     <h2 class="text-center">Creating Post</h2>
 
-
-                    <div class="md-form md-outline">
-                        <i class="fas fa-lightbulb prefix"></i>
-                        <input id="postTitleCreating" type="text" length="10" class="form-control" required>
-                        <label for="postTitleCreating">Title for post</label>
-                    </div>
-
-                    <div class="md-form md-outline">
-                        <i class="fab fa-adn prefix"></i>
-                        <textarea id="postBodyCreating" class="form-control md-textarea" rows="8"
-                            aria-describedby="postBodyHelp" required></textarea>
-                        <label for="postBodyCreating">Type your post</label>
-                    </div>
-
-                    <div class="form-row">
-                        <i class="fas fa-tags prefix"></i>
-                        <div class="col">
-                            <div class="md-form mt-0">
-
-                                <input id="postTagCreating" type="text" class="form-control" placeholder="Tag">
+                    <div id="imagesForUpload">
+                        <div class="input-group m-2">
+                            <div class="custom-file">
+                                <img id="viewImage" class="img-fluid">
+                                <input id="postImage" type="file" class="custom-file-input" id="image-${userById.id}"
+                                    aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                             </div>
                         </div>
 
-                        <div class="col">
-                            <div class="form-group">
-                                <select id="tagsSelect" class="custom-select" multiple>
+                        <div class="md-form md-outline">
+                            <i class="fas fa-lightbulb prefix"></i>
+                            <input id="postTitleCreating" type="text" length="10" class="form-control" required>
+                            <label for="postTitleCreating">Title for post</label>
+                        </div>
 
-                                </select>
+                        <div class="md-form md-outline">
+                            <i class="fab fa-adn prefix"></i>
+                            <textarea id="postBodyCreating" class="form-control md-textarea" rows="8"
+                                aria-describedby="postBodyHelp" required></textarea>
+                            <label for="postBodyCreating">Type your post</label>
+                        </div>
+
+                        <div class="form-row">
+                            <i class="fas fa-tags prefix"></i>
+                            <div class="col">
+                                <div class="md-form mt-0">
+
+                                    <input id="postTagCreating" type="text" class="form-control" placeholder="Tag"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <select id="tagsSelect" class="custom-select" multiple>
+
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <button id="btnSendRegistration" type="submit" class="btn btn-primary btn-block">Send</button>
-                    </div>
-
+                        <div>
+                            <button type="submit" class="btn btn-primary btn-block">Send</button>
+                        </div>
                 </form>
             </div>
         </div>

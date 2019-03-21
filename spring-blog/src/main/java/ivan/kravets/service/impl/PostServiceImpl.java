@@ -2,7 +2,9 @@ package ivan.kravets.service.impl;
 
 
 import ivan.kravets.domain.PostDTO;
+import ivan.kravets.domain.TagDTO;
 import ivan.kravets.entity.PostEntity;
+import ivan.kravets.entity.TagEntity;
 import ivan.kravets.entity.UserEntity;
 import ivan.kravets.exceptions.NoAccessException;
 import ivan.kravets.exceptions.NotFoundException;
@@ -17,7 +19,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -36,16 +40,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDTO savePost(Long idUser, PostDTO post) {
-//        boolean exists = postRepository.existsByTitleIgnoreCase(post.getTitle());
-//
-//        if (exists) {
-//            return null;
-//        }
 
-        PostEntity postEntity = objectMapper.map(post, PostEntity.class); //dtoToEntityMapper(post);
+        PostEntity postEntity = objectMapper.map(post, PostEntity.class);
+
         UserEntity userEntity = userRepository.findById(idUser).orElseThrow(() -> new NotFoundException("User with id [" +idUser+ "] not found"));
         postEntity.setUser(userEntity);
-
         postRepository.save(postEntity);
         return post;
     }
@@ -53,23 +52,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDTO> findAllPosts() {
         List<PostEntity> posts = postRepository.findAll();
-        List<PostDTO> postDTOS = objectMapper.mapAll(posts, PostDTO.class); //new ArrayList<>();
-
-//        for (PostEntity postEntity : posts) {
-//            PostDTO postDTO = entityToDTOMapper(postEntity);
-//            postDTOS.add(postDTO);
-//        }
+        List<PostDTO> postDTOS = objectMapper.mapAll(posts, PostDTO.class);
 
         return postDTOS;
     }
 
     @Override
     public PostDTO findPostById(Long id) {
-//        boolean exists = postRepository.existsById(id);
-//
-//        if (!exists) {
-//            return null;
-//        }
 
         PostEntity postEntity = postRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id [" +id+ "] not found"));
         PostDTO postDTO = objectMapper.map(postEntity, PostDTO.class); //entityToDTOMapper(postEntity);
@@ -106,13 +95,6 @@ public class PostServiceImpl implements PostService {
         List<PostEntity> posts = postRepository.findAll();
         List<PostDTO> postDTOS = objectMapper.mapAll(posts, PostDTO.class); //new ArrayList<>();
 
-//        for (PostEntity postEntity : posts) {
-//            if (postEntity.getUser().getId().equals(idUser)) {
-//                PostDTO postDTO = entityToDTOMapper(postEntity);
-//                postDTOS.add(postDTO);
-//            }
-//        }
-
         return postDTOS;
     }
 
@@ -131,124 +113,13 @@ public class PostServiceImpl implements PostService {
         postRepository.deleteById(id);
     }
 
-    //    public PostDTO entityToDTOMapper(PostEntity postEntity) {
-//        PostDTO postDTO = new PostDTO();
-//        postDTO.setId(postEntity.getId());
-//        postDTO.setTitle(postEntity.getTitle());
-//        postDTO.setDescription(postEntity.getDescription());
-//        postDTO.setCreatedDate(postEntity.getCreatedDate());
-//
-//        UserEntity userEntity = postEntity.getUser();
-//        UserDTO userDTO = new UserDTO();
-//        userDTO.setId(userEntity.getId());
-//        userDTO.setFirstName(userEntity.getFirstName());
-//        userDTO.setLastName(userEntity.getLastName());
-//        userDTO.setNickName(userEntity.getNickName());
-//        userDTO.setAccountCreatedDate(userEntity.getAccountCreatedDate());
-//
-//        postDTO.setUser(userDTO);
-//
-//        Set<TagEntity> tagsEntity = postEntity.getTags();
-//        Set<TagDTO> tagDTOS = new HashSet<>();
-//        for (TagEntity tagEntity : tagsEntity) {
-//            TagDTO tagDTO = new TagDTO();
-//            tagDTO.setId(tagEntity.getId());
-//            tagDTO.setName(tagEntity.getName());
-//
-//            Set<PostDTO> postDTOS = new HashSet<>();
-//
-//            for (PostEntity tagEntityPost : tagEntity.getPosts()) {
-//                PostDTO postDTO1 = entityToDTOMapper(tagEntityPost);
-//                postDTOS.add(postDTO1);
-//            }
-//            tagDTO.setPosts(postDTOS);
-//
-//            tagDTOS.add(tagDTO);
-//        }
-//
-//        postDTO.setTags(tagDTOS);
-//
-//        Set<CommentEntity> commentEntities = postEntity.getComments();
-//        Set<CommentDTO> commentDTOS = new HashSet<>();
-//        for (CommentEntity commentEntity : commentEntities) {
-//            CommentDTO commentDTO = new CommentDTO();
-//            commentDTO.setId(commentEntity.getId());
-//            commentDTO.setBody(commentEntity.getBody());
-//
-//            UserEntity userEntityComment = postEntity.getUser();
-//            UserDTO userDtoComment = new UserDTO();
-//            userDtoComment.setId(userEntityComment.getId());
-//            userDtoComment.setFirstName(userEntityComment.getFirstName());
-//            userDtoComment.setLastName(userEntityComment.getLastName());
-//            userDtoComment.setNickName(userEntityComment.getNickName());
-//            userDtoComment.setAccountCreatedDate(userEntity.getAccountCreatedDate());
-//            commentDTO.setUser(userDtoComment);
-//
-//            commentDTOS.add(commentDTO);
-//        }
-//
-//        postDTO.setComments(commentDTOS);
-//
-//        return postDTO;
-//    }
+    @Override
+    public void addImageToPost(Long id, String fileName) {
+        PostEntity postEntity = postRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        postEntity.setImage(fileName);
+        postRepository.save(postEntity);
+    }
 
-//    private PostEntity dtoToEntityMapper(PostDTO postDTO) {
-//        PostEntity postEntity = new PostEntity();
-//        postEntity.setId(postDTO.getId());
-//        postEntity.setTitle(postDTO.getTitle());
-//        postEntity.setDescription(postDTO.getDescription());
-//        postEntity.setCreatedDate(postDTO.getCreatedDate());
 
-//        UserDTO userDTO = postDTO.getUser();
-//        UserEntity userEntity = new UserEntity();
-//        userEntity.setId(userDTO.getId());
-//        userEntity.setFirstName(userDTO.getFirstName());
-//        userEntity.setLastName(userDTO.getLastName());
-//        userEntity.setNickName(userDTO.getNickName());
-//        userEntity.setAccountCreatedDate(userDTO.getAccountCreatedDate());
-//
-//        postEntity.setUser(userEntity);
-
-//        Set<TagDTO> tagsDTOS = postDTO.getTags();
-//        Set<TagEntity> tagEntities = new HashSet<>();
-//        for (TagDTO tagDTO : tagsDTOS) {
-//            TagEntity tagEntity = new TagEntity();
-//            tagEntity.setId(tagDTO.getId());
-//            tagEntity.setName(tagDTO.getName());
-//
-//            Set<PostEntity> postEntities = new HashSet<>();
-//
-//            for (PostDTO tagDTOPost : tagDTO.getPosts()) {
-//                PostEntity postEntity1 = dtoToEntityMapper(tagDTOPost);
-//                postEntities.add(postEntity1);
-//            }
-//            tagEntity.setPosts(postEntities);
-//
-//            tagEntities.add(tagEntity);
-//        }
-//
-//        postEntity.setTags(tagEntities);
-//
-//        Set<CommentDTO>commentDTOS = postDTO.getComments();
-//        Set<CommentEntity> commentEntities = new HashSet<>();
-//        for (CommentDTO commentDTO : commentDTOS) {
-//            CommentEntity commentEntity = new CommentEntity();
-//            commentEntity.setId(commentDTO.getId());
-//            commentEntity.setBody(commentDTO.getBody());
-//
-//            Set<PostEntity> postEntities = new HashSet<>();
-//
-//            for (PostDTO commentDTOPost : commentDTO.getPosts()) {
-//                PostEntity postEntity1 = dtoToEntityMapper(commentDTOPost);
-//                postEntities.add(postEntity1);
-//            }
-//            commentEntity.setPosts(postEntities);
-//
-//            commentEntities.add(commentEntity);
-//        }
-//
-//        postEntity.setComments(commentEntities);
-//
-//        return postEntity;
-//    }
 }

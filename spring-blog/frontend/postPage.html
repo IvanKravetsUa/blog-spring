@@ -36,15 +36,17 @@
                         <li class="nav-item active">
                             <a href="index.html" class="nav-link waves-effect"><strong>Home</strong></a>
                         </li>
-                        <li class="nav-item">
-                            <a href="accountPage.html" class="nav-link waves-effect"><strong>Account</strong></a>
+                        <li  class="nav-item">
+                            <a href="accountPage.html" class="nav-link waves-effect"><strong id="accountMain">Account</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a href="postPage.html" class="nav-link waves-effect"><strong>Posts</strong></a>
+                            <a href="creationPostPage.html" class="nav-link waves-effect"><strong>Creating
+                                    Post</strong></a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link waves-effect" data-toggle="modal"
-                                data-target="#aboutModal"><strong>About us</strong></a>
+                                data-target="#aboutModal"><strong>About
+                                    us</strong></a>
                         </li>
                     </ul>
 
@@ -58,6 +60,12 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link waves-effect border border-dark rounded" data-toggle="modal"
                                 data-target="#loginModal"><strong>Log in</strong></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav nav-flex-icons">
+                        <li class="nav-item">
+                            <button id="logoutBtn" type="button" class="btn btn-outline-info waves-effect px-3">Log
+                                out</i></button>
                         </li>
                     </ul>
                 </div>
@@ -76,23 +84,26 @@
                         </div>
 
                         <div class="card mb-4 wow slideInLeft z-depth-2">
-                             <div id="postCardBody" class="card-body"></div>
+                            <div id="postCardBody" class="card-body"></div>
 
                             <div id="postCardFooter" class="card-footer">
                                 <div class="media-likes row">
-                                  
-                                    <div id="postCardFooterLike" class="media-likes red-text col"></div>
-                                   
+
+                                    <div id="postTotalMarks" class="media-likes red-text row">
+                                        <div id="postCardFooterLike" class="media-likes red-text col"></div>
+                                        <div id="postCardFooterDislike" class="media-likes red-text col"></div>
+                                    </div>
+
                                     <div id="postCardFooterTags" class="media-tags col"> </div>
                                 </div>
                                 <hr>
-                              
+
                                 <div id="postCardFooterTime" class="media-time d-flex justify-content-center"></div>
-                            </div> 
-                        </div> 
+                            </div>
+                        </div>
 
                         <!-- Силка на автора поста -->
-                        <div  class="card mb-4 wow fadeInLeft">
+                        <div class="card mb-4 wow fadeInLeft">
                             <div class="card-header front-weight-bold">
                                 <span>About author</span>
                                 <span class="pull-right">
@@ -159,55 +170,7 @@
                         <!-- пост дня -->
                         <div class="card mb-4 text-center wow fadeIn">
                             <div class="card-header">Post of the day</div>
-                            <div class="card-body">
-                                <div class="author">
-                                    <!-- <img style="width: 4rem;" src="images/img3.jpeg" alt="" class="d-flex mr-3"> -->
-                                    <a>
-                                        <p><strong>Author</strong></p>
-                                        <h4 class="mt-0 mb-1 font-weight-bold">
-                                            Ivan Kravets
-                                        </h4>
-                                    </a>
-                                    <hr>
-                                    <!-- титулка поста -->
-                                    <div class="media-header">
-                                        <a>
-                                            <h4 class="mt-0 mb-1 font-weight-bold">
-                                                About Life
-                                            </h4>
-                                        </a>
-                                        <br>
-                                        <!-- тіло поста -->
-                                        <div class="media-body">
-                                            <a class="mt-0 mb-1 font-weight">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum dolor
-                                                sit amet, consectetur adipisicing elit. Saepe quis eveniet totam
-                                                corporis distinctio eius autem quasi. Eius, saepe doloremque!
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="card-footer">
-                                        <!-- лайки і теги -->
-                                        <div class="media-likes row">
-                                            <!-- лайки -->
-                                            <div class="media-likes red-text col">
-                                                <h6><strong>Likes</strong>
-                                                    <p><i class="fas fa-heart"></i> 8</p>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                        <!-- теги -->
-                                        <div class="media-tags col">
-                                            <a href="#" class="light-blue-text">
-                                                <h6>
-                                                    <p><strong>Tags:</strong></p>
-                                                    <i class="fas fa-tags"></i>
-                                                    <strong>Lorem ipsum dolor sit amet.</strong>
-                                                </h6>
-                                            </a>
-                                        </div>
-                                    </div>
+                            <div id="postOfTheDay" class="card-body">
                                 </div>
                             </div>
 

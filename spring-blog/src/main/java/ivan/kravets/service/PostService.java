@@ -22,4 +22,6 @@ public interface PostService {
     Page<PostEntity> getUsersByPage(Pageable pageable);
 
     void deletePost(Long id);
+
+    void addImageToPost(Long id, String fileName);
 }

@@ -34,7 +34,7 @@ public class PostDTO {
     private UserDTO user;
 
     @NotNull(message = "Field 'tags' can't be null")
-    private Set<TagDTO> tags;
+    private List<TagDTO> tags;
 
     private Set<CommentDTO> comments;
 
