@@ -1,9 +1,10 @@
 $(document).ready(function() {
 
-    $("#btnSubmitLogin").on("click", function() {
+    $("#submitLogin").on("submit", function() {
         
         console.log("click");
         signin();
+        return false;
     })
 
 });
@@ -32,4 +33,5 @@ function signin() {
             }
         }
     });
+    return false;
 }

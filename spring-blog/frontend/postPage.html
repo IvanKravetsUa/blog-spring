@@ -36,8 +36,9 @@
                         <li class="nav-item active">
                             <a href="index.html" class="nav-link waves-effect"><strong>Home</strong></a>
                         </li>
-                        <li  class="nav-item">
-                            <a href="accountPage.html" class="nav-link waves-effect"><strong id="accountMain">Account</strong></a>
+                        <li class="nav-item">
+                            <a href="accountPage.html" class="nav-link waves-effect"><strong
+                                    id="accountMain">Account</strong></a>
                         </li>
                         <li class="nav-item">
                             <a href="creationPostPage.html" class="nav-link waves-effect"><strong>Creating
@@ -50,11 +51,11 @@
                         </li>
                     </ul>
 
-                    <form class="form-inline my-2 my-lg-0">
+                    <!-- <form class="form-inline my-2 my-lg-0">
                         <input type="text" class="form-control mr-sm-2" placeholder="Search" aria-label="Search">
                         <button
                             class="btn btn-outline-primary waves-effect my-2 my-sm-0"><strong>Search</strong></button>
-                    </form>
+                    </form> -->
 
                     <ul class="navbar-nav nav-flex-icons">
                         <li class="nav-item">
@@ -79,8 +80,8 @@
             <section class="mt-4">
                 <div class="row">
                     <div id="postDetail" class="col-md-8 mb-4">
-                        <div class="card mb-4 wow fadeInLeft">
-                            <img src="images/postImg.jpeg" alt="" class="img-fluid">
+                        <div id="postImage" class="card mb-4 wow fadeInLeft">
+
                         </div>
 
                         <div class="card mb-4 wow slideInLeft z-depth-2">
@@ -120,57 +121,62 @@
                         </div>
 
                         <!-- Коменти які вже написані -->
-                        <div id="postCommentsPost" class="card card-comments mb3 wow fadeInRight">
+                        <div  class="card card-comments mb3 wow fadeInRight">
                             <div id="postCommentsSize" class="card-header font-weight-bold"></div>
-                        </div>
-
-                        <!-- написання комента -->
-                        <div class="card mb-3 wow fadeInUp">
-                            <div class="card-header front-weight-bold">Leave a reply</div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label>Your comment</label>
-                                        <textarea class="form-control" id="" rows="5"></textarea>
-                                    </div>
-
-                                    <div class="text-center mt-4">
-                                        <button class="btn btn-info btn-md">Post</button>
-                                    </div>
-                                </form>
+                                <div id="commentCardBody" class="card-body"></div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-4 mb-4">
-                        <div class="card peach-gradient mb-4 wow fadeIn">
-                            <div class="card-body text-white text-center">
-                                <h4 class="mb-4">
-                                    My Dream Blog
-                                </h4>
-                                <p>
-                                    <strong>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias iste ut delectus
-                                        hic labore sapiente.
-                                    </strong>
-                                </p>
-                                <p class="mb-4">
-                                    <strong>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias iste ut delectus
-                                        hic labore sapiente Lorem ipsum dolor sit..
-                                    </strong>
-                                </p>
+                            <!-- написання комента -->
+                            <div class="card mb-3 wow fadeInUp">
+                                <div class="card-header front-weight-bold">Leave a reply</div>
+                                <div class="card-body">
+                                    <form id="creatingCommentForm">
+                                        <div class="md-form md-outline">
+                                            <i class="fas fa-pencil-alt prefix"></i>
+                                            <textarea id="commentBodyCreating" class="form-control md-textarea" rows="8"
+                                                aria-describedby="commentBodyHelp" required></textarea>
+                                            <label for="commentBodyCreating">Type your comment</label>
+                                        </div>
 
-                                <a href="#" class="btn btn-outline-white btn-md">
-                                    Start <i class="fa fa-graduation-cap ml-2"></i>
-                                </a>
+                                        <div class="text-center mt-4">
+                                            <button type="submit" class="btn btn-info btn-md">Post</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- пост дня -->
-                        <div class="card mb-4 text-center wow fadeIn">
-                            <div class="card-header">Post of the day</div>
-                            <div id="postOfTheDay" class="card-body">
+                        <div class="col-md-4 mb-4">
+                            <div class="card tempting-azure-gradient mb-4 wow fadeIn">
+                                <div class="card-body text-primary text-center">
+                                    <h4 class="mb-4">
+                                        My Dream Blog
+                                    </h4>
+                                    <p>
+                                        <strong>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias iste ut
+                                            delectus
+                                            hic labore sapiente.
+                                        </strong>
+                                    </p>
+                                    <p class="mb-4">
+                                        <strong>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias iste ut
+                                            delectus
+                                            hic labore sapiente Lorem ipsum dolor sit..
+                                        </strong>
+                                    </p>
+
+                                    <a href="registrationPage.html" class="btn btn-outline-primary btn-md">
+                                        Registration <i class="fa fa-graduation-cap ml-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- пост дня -->
+                            <div class="card mb-4 text-center wow fadeIn">
+                                <div class="card-header">Post of the day</div>
+                                <div id="postOfTheDay" class="card-body">
                                 </div>
                             </div>
 
@@ -179,37 +185,8 @@
                             <!-- Коментар дня -->
                             <div class="card mb-4 wow fadeIn">
                                 <div class="card-header">Сomment of the day</div>
-                                <div class="card-body">
-                                    <!-- Автор комента імя -->
-                                    <div class="media-header">
-                                        <img style="width: 4rem;" src="images/img3.jpeg" alt="" class="d-flex mr-3">
-                                        <a>
-                                            <h4 class="mt-0 mb-1 font-weight-bold">
-                                                Lorem, ipsum.
-                                            </h4>
-                                        </a>
-                                        <!-- тіло комента -->
-                                        <div class="media-body">
-                                            <a>
-                                                <h5 class="mt-0 mb-1 font-weight-bold">Lorem ipsum dolor sit.</h5>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing. Lorem ipsum dolor
-                                                sit amet consectetur adipisicing elit. Debitis consectetur dolore
-                                                asperiores numquam quia rem ducimus perspiciatis dolorem facilis natus?
-                                            </a>
-                                        </div>
-                                        <hr>
-                                        <!-- лайки -->
-                                        <div class="card-footer">
-                                            <div class="media-likes row">
-                                                <!-- лайки -->
-                                                <div class="media-likes red-text col">
-                                                    <h6><strong>Likes</strong>
-                                                        <p><i class="fas fa-heart"></i> 8</p>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div id="commentOfTheDay" class="card-body">
+                                    
                                 </div>
                             </div>
                         </div>
@@ -238,8 +215,8 @@
                             <input type="password" id="userPassLogin" class="form-control mb-4" placeholder="Password"
                                 required>
                             <div class="d-flex justify-content-around">
-                                <div>
-                                    <!-- Remember me -->
+                                <!-- <div>
+                                   
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input type="checkbox" class="form-check-input">
@@ -248,9 +225,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <!-- Forgot password -->
+                                  
                                     <a href="">Forgot password?</a>
-                                </div>
+                                </div> -->
                             </div>
                             <!-- Sign in button -->
                             <button id="btnSubmitLogin" class="btn btn-info btn-block my-4" type="submit">Sign
@@ -276,8 +253,31 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo placeat amet optio earum! Saepe
-                        tempora praesentium quos, ab voluptate at delectus quam placeat ipsum accusamus.</p>
+                    <p>
+                            My Dream blog is an information and entertainment community, all content of which is created by users. 
+                            The site administration only keeps order and compliance with the rules. All added news and comments have their rating. 
+                            News on the main page is formed by a special algorithm that displays the most relevant posts at the moment in the top.
+
+                            Your rating increases with each plus received for your news and comments. Each vote for the post changes your rating by 2 points, and for a comment - by 1 point. 
+                            With the growth of your rating, you open up new opportunities. Dependence of your capabilities on your rating:
+    
+                            <br><br>
+                            -300 Your account is automatically blocked;<br>
+                            -200 You can not add comments;<br>
+                            0 Your rating at registration;<br>
+                            +10 You can attach a picture to the comment. Links in your comments become clickable;<br>
+                            +150 You can add video;<br>
+                            +10000 can combine tags.<br>
+                            <br>
+                            Depending on the rating for the day, you can add: <br>
+                            <div style="width: 150px">
+                                    200 and below <span style="float: right">1 post</span><br>
+                                200-500 <span style="float: right">2 posts</span><br>
+                                500-1000 <span style="float: right">3 posts</span><br>
+                                1000-3000 <span style="float: right">4 posts</span><br>
+                                3000 и более <span style="float: right">5 posts</span><br>
+                            </div>
+                      </p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal">Close</button>

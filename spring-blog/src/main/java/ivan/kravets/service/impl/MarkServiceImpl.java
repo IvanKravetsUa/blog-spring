@@ -75,8 +75,33 @@ public class MarkServiceImpl implements MarkSevice {
 
         MarkEntity markEntity = objectMapper.map(like, MarkEntity.class);
         CommentEntity commentFromDB = commentRepository.findById(idComment).orElseThrow(() -> new NotFoundException("Comment with id["+idComment+"] not found"));
+        markEntity.setUser(userRepository.findById(idUser).orElseThrow(() -> new NotFoundException("User with id["+idUser+"] not found")));
         Set<MarkEntity> marksByComment = commentFromDB.getMarks();
+        for (MarkEntity mark : marksByComment) {
+            UserEntity userEntity = mark.getUser();
+            Long userIdByDB = userEntity.getId();
+            if (userIdByDB == idUser) {
+                throw new AlreadyExistsException("This user has already comment like");
+            }
+        }
+
         marksByComment.add(markEntity);
+        commentRepository.save(commentFromDB);
+        markRepository.save(markEntity);
+
+        if (like.getMarkStatus() == 1) {
+            UserEntity userFromDB = commentFromDB.getUser();
+            Integer reputation = userFromDB.getReputation();
+            Integer reputationNew = reputation + 1;
+            userFromDB.setReputation(reputationNew);
+            userRepository.save(userFromDB);
+        } else if (like.getMarkStatus() == 0) {
+            UserEntity userFromDB = commentFromDB.getUser();
+            Integer reputation = userFromDB.getReputation();
+            Integer reputationNew = reputation - 1;
+            userFromDB.setReputation(reputationNew);
+            userRepository.save(userFromDB);
+        }
         return like;
     }
 }

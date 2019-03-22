@@ -14,4 +14,5 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
 //   boolean existsById(Long id);
 
     Optional<PostEntity> findById(Long id);
+    Optional<PostEntity> findByTitleIgnoreCase(String title);
 }

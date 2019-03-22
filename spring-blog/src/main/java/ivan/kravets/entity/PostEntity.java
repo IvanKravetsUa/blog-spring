@@ -41,7 +41,7 @@ public class PostEntity extends BaseEntity {
     )
     private List<TagEntity> tags = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "post_comment",
             joinColumns = @JoinColumn(name = "post_id"),

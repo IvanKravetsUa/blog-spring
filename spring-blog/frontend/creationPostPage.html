@@ -37,7 +37,8 @@
                             <a href="index.html" class="nav-link waves-effect"><strong>Home</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a href="accountPage.html" class="nav-link waves-effect"><strong id="accountMain">Account</strong></a>
+                            <a href="accountPage.html" class="nav-link waves-effect"><strong
+                                    id="accountMain">Account</strong></a>
                         </li>
                         <li class="nav-item">
                             <a href="creationPostPage.html" class="nav-link waves-effect"><strong>Creating
@@ -50,11 +51,11 @@
                         </li>
                     </ul>
 
-                    <form class="form-inline my-2 my-lg-0">
+                    <!-- <form class="form-inline my-2 my-lg-0">
                         <input type="text" class="form-control mr-sm-2" placeholder="Search" aria-label="Search">
                         <button
                             class="btn btn-outline-primary waves-effect my-2 my-sm-0"><strong>Search</strong></button>
-                    </form>
+                    </form> -->
 
                     <ul class="navbar-nav nav-flex-icons">
                         <li class="nav-item">
@@ -152,22 +153,22 @@
                             <input type="password" id="userPassLogin" class="form-control mb-4" placeholder="Password"
                                 required>
                             <div class="d-flex justify-content-around">
-                                <div>
-                                    <!-- Remember me -->
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input">
-                                            Запамятати мене
-                                        </label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <!-- Forgot password -->
-                                    <a href="">Forgot password?</a>
+                                <!-- <div>
+                               
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input">
+                                        Запамятати мене
+                                    </label>
                                 </div>
                             </div>
+                            <div>
+                              
+                                <a href="">Forgot password?</a>
+                            </div> -->
+                            </div>
                             <!-- Sign in button -->
-                            <button id="btnSubmitLogin" class="btn btn-info btn-block my-4" type="button">Sign
+                            <button id="btnSubmitLogin" class="btn btn-info btn-block my-4" type="submit">Sign
                                 in</button>
                             <!-- Register -->
                             <p>Not a member?
@@ -179,7 +180,7 @@
             </div>
         </div>
     </div>
-
+    <!-- about us -->
     <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModal" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -190,8 +191,36 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo placeat amet optio earum! Saepe
-                        tempora praesentium quos, ab voluptate at delectus quam placeat ipsum accusamus.</p>
+                    <p>
+                        My Dream blog is an information and entertainment community, all content of which is created by
+                        users.
+                        The site administration only keeps order and compliance with the rules. All added news and
+                        comments have their rating.
+                        News on the main page is formed by a special algorithm that displays the most relevant posts at
+                        the moment in the top.
+
+                        Your rating increases with each plus received for your news and comments. Each vote for the post
+                        changes your rating by 2 points, and for a comment - by 1 point.
+                        With the growth of your rating, you open up new opportunities. Dependence of your capabilities
+                        on your rating:
+
+                        <br><br>
+                        -300 Your account is automatically blocked;<br>
+                        -200 You can not add comments;<br>
+                        0 Your rating at registration;<br>
+                        +10 You can attach a picture to the comment. Links in your comments become clickable;<br>
+                        +150 You can add video;<br>
+                        +10000 can combine tags.<br>
+                        <br>
+                        Depending on the rating for the day, you can add: <br>
+                        <div style="width: 150px">
+                            200 and below <span style="float: right">1 post</span><br>
+                            200-500 <span style="float: right">2 posts</span><br>
+                            500-1000 <span style="float: right">3 posts</span><br>
+                            1000-3000 <span style="float: right">4 posts</span><br>
+                            3000 и более <span style="float: right">5 posts</span><br>
+                        </div>
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal">Close</button>

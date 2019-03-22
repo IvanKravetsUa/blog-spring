@@ -46,6 +46,8 @@ public class PostServiceImpl implements PostService {
         UserEntity userEntity = userRepository.findById(idUser).orElseThrow(() -> new NotFoundException("User with id [" +idUser+ "] not found"));
         postEntity.setUser(userEntity);
         postRepository.save(postEntity);
+        PostDTO postDTO = objectMapper.map(postRepository.findByTitleIgnoreCase(postEntity.getTitle()).get(), PostDTO.class);
+        post.setId(postDTO.getId());
         return post;
     }
 

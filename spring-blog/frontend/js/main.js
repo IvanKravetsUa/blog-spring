@@ -36,18 +36,39 @@ $(document).ready(function () {
         return false;
       });
 
+      $("#creatingCommentForm").on("submit", function() {
+        createComment(localStorage.getItem("authorized_userId"), localStorage.getItem("postById"));
+        return false;
+      });
+
+      $(document).on("click", "#commentCardFooterLike button", function (e) {
+        let markStatus = 1
+        let commentId = e.target.id.slice(9);
+        console.log(commentId)
+        creatingLikeByComment(localStorage.getItem("authorized_userId"), commentId, markStatus)
+        return false;
+      });
+
+      $(document).on("click", "#commentCardFooterDislike button", function (e) {
+        let markStatus = 0
+        let commentId = e.target.id.slice(10);
+        creatingLikeByComment(localStorage.getItem("authorized_userId"), commentId, markStatus)
+        return false;
+      });
+
       $(document).on("click", "#postCardFooterLike button", function (e) {
         let markStatus = 1
         creatingLikeByPost(localStorage.getItem("authorized_userId"), postId, markStatus)
-        // location.reload();
+        location.reload();
         $("#postLike-"+ postId).hide();
         $("#postDislike-"+ postId).hide();
         return false;
       });
+
       $(document).on("click", "#postCardFooterDislike button", function (e) {
         let markStatus = 0
         creatingLikeByPost(localStorage.getItem("authorized_userId"), postId, markStatus)
-        // location.reload();
+        location.reload();
         $("#postLike-"+ postId).hide();
         $("#postDislike-"+ postId).hide();
         return false;
@@ -69,10 +90,12 @@ $(document).ready(function () {
   showAllUsers();
   showAllPosts();
   showAllTags();
+  showAllComments();
 
   showUserById(userId);
   showPostById(postId);
   showPostOfTheDay(localStorage.getItem("postOfTheDay"));
+  showCommentOfTheDay(localStorage.getItem("commentOfTheDayId"));
 
   $("#sendRegistration").submit(signup);
 
@@ -116,14 +139,52 @@ $(document).ready(function () {
     console.log(autorPostId);
   });
 
+  $(document).on("click", "#postCommentsPost strong", function (e) {
+    let autorCommentId = e.target.id.slice(9);
+    showUserById(autorCommentId);
+    localStorage.setItem("autorPostId", autorCommentId)
+    window.location.href = "accountPage.html";
+    console.log(autorPostId);
+  });
+
 });
 
-function creatingLikeByPost(userId, postId, markStatus) {
+function creatingLikeByComment(userId, commentId, markStatus) {
+  let authToken = localStorage.getItem("auth_token");
   let like = {
     markStatus: markStatus
   }
+
+  $.ajax({
+    url: "http://localhost:8080/marks/" + userId + "/comment/" + commentId,
+    headers: {
+      'Authorization':'Bearer ' + authToken
+    },
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(like),
+    complete: function (serverResponse) {
+      console.log(serverResponse);
+      if (serverResponse.status == 200) {
+        alert("Success");
+        location.reload();
+      }
+    }
+  });
+}
+
+function creatingLikeByPost(userId, postId, markStatus) {
+  let authToken = localStorage.getItem("auth_token");
+
+  let like = {
+    markStatus: markStatus
+  }
+
   $.ajax({
     url: "http://localhost:8080/marks/" + userId + "/post/" + postId,
+    headers: {
+      'Authorization':'Bearer ' + authToken
+    },
     method: "POST",
     contentType: "application/json",
     data: JSON.stringify(like),
@@ -172,6 +233,10 @@ function creatingPost(userId) {
     complete: function (serverResponse) {
       let post = serverResponse.responseJSON;
       console.log(post)
+      if(serverResponse.status == 201) {
+        localStorage.setItem("postById", post.id)
+        window.location.href = "postPage.html";
+      }
     }
   });
 }
@@ -191,7 +256,7 @@ function uploadPostImage(postId) {
     data: formData,
     complete: function (res) {
       if (res.status == 202) {
-        alert("success")
+        location.reload();
       }
     }
   })
@@ -288,7 +353,7 @@ function showUserById(userId) {
         `
              <p><i class="far fa-user-circle"></i>Avatar</p>
              <img src="${userById.image != null ? (IMAGE_URL + userById.image) : ""}" class="img-fluid"">
-              <div class="input-group m-2">
+              <div id = "userImage${userById.id}" class="input-group m-2">
                <div class="custom-file">
                  <input type="file" class="custom-file-input" id="image-${userById.id}" aria-describedby="inputGroupFileAddon01">
                  <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
@@ -326,6 +391,10 @@ function showUserById(userId) {
       $("#accountInformationFooter").append(
         `<p><i class="fas fa-clock"></i>Date of creation:<h5></h5>${userById.accountCreatedDate}</p>`
       );
+
+      if(localStorage.getItem("authorized_userId") != userById.id) {
+        $("#userImage"+userById.id).hide();
+      }
     }
   });
 }
@@ -369,6 +438,7 @@ function deletePostRequest(postId) {
 }
 
 function showAllPosts(pageNumber) {
+  let IMAGE_URL = "http://localhost:8080/users/image?imageName=";
   $.ajax({
     url: "http://localhost:8080/" + "posts/page?page=" + pageNumber,
     method: "GET",
@@ -408,7 +478,7 @@ function showAllPosts(pageNumber) {
           `
           <div  class="postsBody col-lg-6 col-md-12"></p>
             <div class="view overlay rounded z-depth-1-half mb-3">
-              <img src="images/img1.jpeg" alt="" class="img-fluid">
+            <img src="${post.image != null ? (IMAGE_URL + post.image) : ""}" class="img-fluid"">
               <a href="#">
                 <div class="mask rgba-white-slight"></div>
               </a>
@@ -519,12 +589,14 @@ function showPostOfTheDay(postOfTheDayId) {
 }
 
 function showPostById(postId) {
+  let IMAGE_URL = "http://localhost:8080/users/image?imageName=";
   $.ajax({
     url: "http://localhost:8080/posts/" + postId,
     method: "GET",
     contentType: "application/json",
     complete: function (serverResponse) {
       let postById = serverResponse.responseJSON;
+      console.log(postById)
 
       let tagsInPost = postById.tags
       let userByPost = postById.user
@@ -544,6 +616,19 @@ function showPostById(postId) {
           postMarksSize--
         }
       })
+
+      $("#postImage").append(
+        `
+           
+      <img src="${postById.image != null ? (IMAGE_URL + postById.image) : ""}" class="img-fluid"">
+      
+      <div id = "postImage${userByPost.id}" class="input-group m-2">
+       <div class="custom-file">
+         <input type="file" class="custom-file-input" id="image-${postById.id}" aria-describedby="inputGroupFileAddon01">
+         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+       </div>
+      `
+      );
       
       $("#postCardBody").append(
         `
@@ -634,38 +719,139 @@ function showPostById(postId) {
         comments.marks.forEach(function () {
           marksValue++
         });
-        $("#postCommentsPost").append(
+        $("#commentCardBody").append(
           `
-        <div class="card-body">
+        
 
         <div class="media d-block d-md-flex mt-4">
-            <img src="images/portred.jpg" alt="" class="d-flex mb-3 mx-auto">
+        <img src="${comments.user.image != null ? (IMAGE_URL + comments.user.image) : ""}" class="d-flex mb-3 mx-auto"">
             <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                <h5 class="mt-0 front-weight-bold"><strong>${comments.user.firstName} ${comments.user.lastName}</strong>
-                    <a href="#" class="pull-right">
-                        <i class="fa fa-reply"></i>
-                    </a>
+                <h5 class="mt-0 front-weight-bold"><strong id="autorPost${comments.user.id}">${comments.user.firstName} ${comments.user.lastName}</strong>
+                    
                 </h5>
                 ${comments.body}
             </div>
-        </div>
-       </div> 
-        <div class="card-footer">
-       <div class="media-likes red-text col">
-          <h5><i class="fas fa-heart"></i><strong>Likes ${marksValue}</strong></h5>
+            
+            <div class="media-likes red-text row">
+            <h5><i class="fas fa-heart"></i>Likes ${marksValue}</h5>
+            <div id="commentCardFooterLike" class="media-likes red-text">
+            <button id="postLike-${comments.id}" type="button" class="btn btn-outline-danger waves-effec p-2"><i
+            class="far fa-thumbs-up" aria-hidden="true"></i></button>
+            </div>
+            <div id="commentCardFooterDislike" class="media-likes red-text">
+            <button id="postDislike-${comments.id}" type="button" class="btn btn-outline-danger waves-effec p-2"><i
+                  class="far fa-thumbs-down" aria-hidden="true"></i></button>
+          </div>
          </div>
-      </div> 
+        </div>
+      
       
         `
         );
       });
-
+      if(localStorage.getItem("authorized_userId") != userByPost.id) {
+        $("#postImage"+userByPost.id).hide();
+      }
 
     }
   });
 
   
 }
+
+function createComment(userId, postId) {
+
+    let comment = {
+      body : $("#commentBodyCreating").val()
+    }
+
+    $.ajax({
+      url: "http://localhost:8080/comments/" + userId + "/post/" + postId,
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(comment),
+      complete: function (serverResponse) {
+        console.log(serverResponse.responseJSON)
+        if(serverResponse.status == 201) {
+          location.reload();
+          
+        }
+      }
+    })
+    return false;
+  }
+
+  function showAllComments() {
+     
+    $.ajax({
+      url: "http://localhost:8080/comments",
+      method: "GET",
+      contentType: "application/json",
+      complete: function (serverResponse) {
+        let comments = serverResponse.responseJSON
+        console.log(comments)
+        localStorage.setItem("commentMarksOfTheDay", 0)
+        
+
+        $.each(comments, function(key, comment){
+          let marksTotal = 0;
+          $.each(comment.marks, function (key, mark) {
+            if (mark.markStatus == 1) {
+              marksTotal++
+            } else {
+              marksTotal--
+            }
+          })
+
+          if (marksTotal > localStorage.getItem("commentMarksOfTheDay")) {
+            localStorage.setItem("commentMarksOfTheDay", marksTotal)
+            localStorage.setItem("commentOfTheDayId", comment.id)
+          }
+        })
+        
+      }
+    })
+  }
+
+  function showCommentOfTheDay(commentOfTheDayId) {
+    let IMAGE_URL = "http://localhost:8080/users/image?imageName=";
+    $.ajax({
+      url: "http://localhost:8080/comments/" + commentOfTheDayId,
+      method: "GET",
+      contentType: "application/json",
+      complete: function (serverResponse) {
+        let comment = serverResponse.responseJSON;
+
+        $("#commentOfTheDay").append(`
+        <div class="media-header">
+            <img style="width: 4rem;" src="${comment.user.image != null ? (IMAGE_URL + comment.user.image) : ""}" alt="" class="d-flex mr-3">
+            <a>
+                <h4 class="mt-0 mb-1 font-weight-bold">
+                    ${comment.user.firstName}, ${comment.user.lastName}.
+                </h4>
+            </a>
+            <div class="media-body">
+                <a>
+                    ${comment.body}
+                </a>
+            </div>
+            <hr>
+            <!-- лайки -->
+            <div class="card-footer">
+                <div class="media-likes row">
+                    <!-- лайки -->
+                    <div class="media-likes red-text col">
+                        <h6><strong>Likes</strong>
+                            <p><i class="fas fa-heart"></i> ${localStorage.getItem("commentMarksOfTheDay")}</p>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `)
+      }
+    })
+  }
 
 
 
@@ -695,48 +881,4 @@ function showPostById(postId) {
 // })   функція добавляє елементи масиву в ліст на сторінку
 
 
-// Вкладенні попередні пости
-{/* <hr>
-            <div class="row">
-              <div class="col-md-3">
 
-                <div class="view overlay rounded z-depth-1">
-                  <img src="images/img2.jpeg" alt="" class="img-fluid">
-                </div>
-              </div>
-              <div class="col-md-9">
-                <p class="dark-gray-text">
-                  <strong>
-                    <i class="fas fa-clock"></i>
-                    19/08/2018
-                  </strong>
-                </p>
-                <a href="postPage.html">
-                  Lorem ipsum dolor sit amet consectetur.
-                  <i class="fa fa-angle-right float-right"></i>
-                </a>
-              </div>
-            </div>
-
-            <hr>
-
-            <div class="row">
-              <div class="col-md-3">
-
-                <div class="view overlay rounded z-depth-1">
-                  <img src="images/img2.jpeg" alt="" class="img-fluid">
-                </div>
-              </div>
-              <div class="col-md-9">
-                <p class="dark-gray-text">
-                  <strong>
-                    <i class="fas fa-clock"></i>
-                    19/08/2018
-                  </strong>
-                </p>
-                <a>
-                  Lorem ipsum dolor sit amet consectetur.
-                  <i class="fa fa-angle-right float-right"></i>
-                </a>
-               </div>
-              </div> */}
